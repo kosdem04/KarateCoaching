@@ -1,0 +1,71 @@
+.add-result-page {
+    font-family: 'Segoe UI', sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.result-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #333;
+}
+
+.result-form select,
+.result-form input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    margin-top: 10px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    color: green;
+    background-color: #e0ffe0;
+    border: 1px solid green;
+}
+
+.message.error {
+    color: red;
+    background-color: #ffe0e0;
+    border: 1px solid red;
+}

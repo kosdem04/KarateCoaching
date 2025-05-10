@@ -1,0 +1,122 @@
+header {
+    margin: 20px auto 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid black;
+    background-color: white;
+    box-shadow: 1px 0px 14px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 95%;
+    color: black;
+    transition: background-color 0.5s, color 0.5s;
+    z-index: 1000;
+    position: relative;
+}
+
+header.scrolled {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    color: white;
+    margin-top: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.logo a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-links a,
+.logout-button {
+    text-decoration: none;
+    color: inherit;
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.logout-button:hover,
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 15px;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        left: 20px; /* теперь слева */
+        z-index: 1001;
+    }
+
+    .logo {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        background: white;
+        border: 1px solid black;
+        border-radius: 8px;
+        padding: 10px;
+        width: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links a,
+    .logout-button {
+        color: black;
+        width: 100%;
+        text-align: left;
+    }
+
+    header.scrolled .nav-links {
+        background-color: #111;
+    }
+
+    header.scrolled .nav-links a,
+    header.scrolled .logout-button {
+        color: white;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}

@@ -1,0 +1,101 @@
+
+.hero-image {
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+table {
+    color: black;
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-transform: uppercase;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+td a{
+    text-decoration: none;
+    color: black;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: flex-end; /* заменяем space-between на flex-end */
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.add-btn{
+    font-size: clamp(0.8rem, 2vw, 1.1rem); /* минимум, адаптивный, максимум */
+    padding: clamp(0.4em, 1vw, 0.8em) clamp(0.8em, 2vw, 1.2em);
+}
+
+.add-btn{
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-btn {
+    background-color: #292828;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: black;
+}
+
+
+@media (max-width: 767px) {
+    table {
+        display: none;
+    }
+
+    .mobile-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .mobile-card {
+        border: 1px solid black;
+        padding: 1rem;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+    }
+
+    .mobile-card:hover {
+        background-color: #ececec;
+    }
+
+    .mobile-card p {
+        margin: 0.3em 0;
+        font-size: 0.95rem;
+    }
+
+    .mobile-card strong {
+        color: #333;
+    }
+}

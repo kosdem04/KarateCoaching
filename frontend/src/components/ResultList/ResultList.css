@@ -1,0 +1,84 @@
+
+.hero-image {
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+table {
+    color: black;
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-transform: uppercase;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+td a{
+    text-decoration: none;
+    color: black;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+
+.inner-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.inner-table th, .inner-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.inner-table th {
+    background-color: #b8b8b8;
+    font-weight: bold;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: flex-end; /* заменяем space-between на flex-end */
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.add-btn{
+    font-size: clamp(0.8rem, 2vw, 1.1rem); /* минимум, адаптивный, максимум */
+    padding: clamp(0.4em, 1vw, 0.8em) clamp(0.8em, 2vw, 1.2em);
+}
+
+.add-btn{
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-btn {
+    background-color: #292828;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: black;
+}

@@ -1,0 +1,27 @@
+networks:
+  karate:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - karate
+
+  backend:
+    build:
+      context: ./backend
+    networks:
+      - karate
+
+  frontend:
+    build:
+      context: ./frontend
+    networks:
+      - karate

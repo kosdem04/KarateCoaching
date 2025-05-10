@@ -1,0 +1,61 @@
+:root {
+  --background-color: white;
+  --background-secondary: rgb(245, 245, 245);
+  --text-color: black;
+  --text-hover: rgba(0, 0, 0, 0.731);
+  --main: #007AFF;
+  --main-hover: #046edf;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Aeroport', sans-serif;
+  font-size: 16px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  width: 95%;
+  max-width: 1500px;
+  margin: 0 auto;
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  flex-direction: column
+}
+
