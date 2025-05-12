@@ -16,16 +16,19 @@ export default function LoginForm() {
         setError(null);
 
         try {
+            console.log(api);
             const response = await api.post("auth/login", {
                 email,
                 password,
             });
+
 
             const token = response.data.access_token;
             login(token);
 
             navigate("/");
         } catch (err) {
+            console.log(err);
             setError(err.response?.data?.detail || "Ошибка регистрации");
         }
     };

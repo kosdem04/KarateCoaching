@@ -22,7 +22,7 @@ app.include_router(main_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost"],  # Замените на адрес вашего React-приложения
+    allow_origins=["http://localhost"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
