@@ -27,7 +27,7 @@ async def get_current_user_tournament(
     return True
 
 
-@router.get("",
+@router.get("/",
             tags=["Турниры"],
             summary="Просмотр всех спортсменов",
             response_model=list[tournaments_schemas.TournamentModel]

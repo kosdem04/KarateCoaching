@@ -29,7 +29,7 @@ async def get_current_user_sportsman(
     return True
 
 
-@router.get("",
+@router.get("/",
             tags=["Спортсмены"],
             summary="Просмотр спортсменов тренера",
             response_model=list[sportsmen_schemas.SportsmanSimpleModel]
