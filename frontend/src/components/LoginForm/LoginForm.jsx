@@ -1,7 +1,7 @@
 import './LoginForm.css';
 import {useEffect, useState} from "react";
 import api from "../../api/axios.js";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../../AuthContext.jsx";
 
 export default function LoginForm() {
@@ -60,6 +60,10 @@ export default function LoginForm() {
                     </label>
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit" className="submit-button">Войти</button>
+                    <br/><br/>
+                    <label className="register-link">
+                        <Link to="/sign_up/">Зарегистрироваться</Link>
+                    </label>
                 </form>
             </div>
         </>

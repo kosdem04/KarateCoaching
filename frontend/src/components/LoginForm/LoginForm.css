@@ -41,3 +41,22 @@
     margin-top: 1rem;
     color: red;
 }
+
+.register-link {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.register-link a {
+    text-decoration: none;
+    color: #292828;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.register-link a:hover {
+    color: black;
+    text-decoration: underline;
+}
