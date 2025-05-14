@@ -20,13 +20,13 @@ export default function LoginForm() {
             password,
         })
             .then(response => {
+                console.log("www");
                 const token = response.data.access_token;
                 login(token);
                 navigate("/");
             })
             .catch(error => {
-                console.log(error);
-                setError(error.response?.data?.detail || "Ошибка регистрации");
+                setError( "Ошибка регистрации");
             });
     };
 
