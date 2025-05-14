@@ -90,7 +90,7 @@ header.scrolled {
         flex-direction: column;
         position: absolute;
         top: 60px;
-        right: 15px;
+        left: 15px;
         background: white;
         border: 1px solid black;
         border-radius: 8px;
