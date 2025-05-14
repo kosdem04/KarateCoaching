@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './TournamentAddForm.css';
 import api from "../../api/axios.js";
+import {useNavigate} from "react-router-dom";
 
 export default function TournamentAddForm() {
     const [message, setMessage] = useState({ text: '', type: '' });
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -28,7 +30,10 @@ export default function TournamentAddForm() {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Турнир успешно добавлен!', type: 'success' });
                 setFormData({ name: '', date_start: '', date_end: '' });
-                setTimeout(() => setMessage({ text: '', type: '' }), 3000);
+                setTimeout(() => {
+                    setMessage({ text: '', type: '' });
+                    navigate("/my_tournaments"); // переход через 2 секунды
+                }, 1500);
             })
             .catch(error => {
                 setMessage({ text: 'Такой турнир уже есть', type: 'error' });
