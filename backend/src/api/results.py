@@ -11,7 +11,7 @@ router = APIRouter(
     prefix="/results",
 )
 
-@router.get("/places",
+@router.get("/places/",
             tags=["Места"],
             summary="Просмотр всех мест",
             response_model=list[results_schemas.PlaceModel]
