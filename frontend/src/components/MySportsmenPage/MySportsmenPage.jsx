@@ -9,6 +9,8 @@ export default function MySportsmenPage() {
 
     const [sportsmen, setSportsmen] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -21,7 +23,16 @@ export default function MySportsmenPage() {
                 console.error('Ошибка при получении данных:', error);
                 setLoading(false);
             });
+
+
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
+
 
     if (loading) {
         return <div>Загрузка...</div>;
@@ -39,24 +50,30 @@ export default function MySportsmenPage() {
                 </div>
             </div>
             <div className="content">
-                <table>
-                    <tr>
-                        <th>Фамилия</th>
-                        <th>Имя</th>
-                    </tr>
-                    {sportsmen.map((sportsman, index) => (
+                {!isMobile ? (
+                    <table>
                         <tr>
-                            <td><Link to={`/my_sportsmen/${sportsman.id}`}>
-                                {sportsman.last_name}
-                            </Link></td>
-                            <td><Link to={`/my_sportsmen/${sportsman.id}`}>
-                                {sportsman.first_name}
-                            </Link></td>
-                            {/*<td>{sportsman.last_name}</td>*/}
-                            {/*<td>{sportsman.first_name}</td>*/}
+                            <th>Фамилия</th>
+                            <th>Имя</th>
                         </tr>
-                    ))}
-                </table>
+                        {sportsmen.map((sportsman, index) => (
+                            <tr key={sportsman.id} onClick={() => navigate(`/my_sportsmen/${sportsman.id}`)} style={{ cursor: 'pointer' }}>
+                                <td>{sportsman.last_name}</td>
+                                <td>{sportsman.first_name}</td>
+                            </tr>
+                        ))}
+                    </table>
+                ) : (
+                    <div className="mobile-cards">
+                        {sportsmen.map((sportsman) => (
+                            <div className="mobile-card" key={sportsman.id}
+                                 onClick={() => navigate(`/my_sportsmen/${sportsman.id}`)}>
+                                <p><strong>Фамилия:</strong> {sportsman.last_name}</p>
+                                <p><strong>Имя:</strong> {sportsman.first_name}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     )
