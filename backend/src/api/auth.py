@@ -38,6 +38,16 @@ async def get_user(user_id: AuthUserDep):
     return {"user_id": user_id}
 
 
+
+@router.get("/get_user_data",
+            tags=["Пользователи"],
+            summary="Получение данных о пользователе",
+            )
+async def get_user_data(session: SessionDep, user_id: AuthUserDep):
+    user = await AuthRequest.get_user_data(session, user_id)
+    return user
+
+
 # @router.get("/get_admin",
 #             tags=["Пользователи"],
 #             summary="Получение информации об администраторе",

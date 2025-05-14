@@ -53,10 +53,10 @@ class AuthRequest:
         return user
 
     @classmethod
-    async def get_user(cls, session: AsyncSession, user_id: str):
+    async def get_user_data(cls, session: AsyncSession, user_id: int):
         query = (
             select(UserORM)
-            .where(UserORM.email == user_id)
+            .where(UserORM.id == user_id)
         )
         return await session.scalar(query)
 
