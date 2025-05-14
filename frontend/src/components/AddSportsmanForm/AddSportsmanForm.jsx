@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './AddSportsmanForm.css';
 import api from "../../api/axios.js";
+import {useNavigate} from "react-router-dom";
 
 export default function AddSportsmanForm() {
     const [message, setMessage] = useState({ text: '', type: '' });
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         first_name: '',
@@ -37,7 +39,10 @@ export default function AddSportsmanForm() {
             .then(response  => {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Спортсмен успешно добавлен!', type: 'success' });
-                setTimeout(() => setMessage({ text: '', type: '' }), 3000);
+                setTimeout(() => {
+                    setMessage({ text: '', type: '' });
+                    navigate("/my_sportsmen"); // переход через 2 секунды
+                }, 1500);
             })
             .catch(error => {
                 setMessage({ text: 'Такой спортсмен уже есть', type: 'error' });
