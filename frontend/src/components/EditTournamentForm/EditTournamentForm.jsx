@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import './EditTournamentForm.css';
 import api from "../../api/axios.js";
 import DeleteTournamentModal from "../DeleteTournamentModal/DeleteTournamentModal.jsx";
@@ -84,10 +84,14 @@ export default function EditTournamentForm() {
             <div className="header">
                 <h1>Редактировать турнир</h1>
             </div>
+            <div className="profile-header">
+                <div className="profile-actions">
+                    <button className="delete-btn" onClick={() => setShowModal(true)}>
+                        Удалить
+                    </button>
+                </div>
+            </div>
 
-            <button className="delete-btn" onClick={() => setShowModal(true)}>
-                Удалить
-            </button>
 
             <form className="result-form" onSubmit={handleSubmit}>
                 <label>
