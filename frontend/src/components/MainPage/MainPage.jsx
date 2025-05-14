@@ -39,8 +39,8 @@ function MainPage() {
                             результаты своих спортсменов. Получайте доступ к ключевой статистике и управляйте командой
                             через удобный интерфейс.
                         </p>
-                        <button className="login-button" onClick={() => navigate("/login")}>
-                            Войти
+                        <button className="login-button" onClick={() => navigate("/sign_up")}>
+                            Зарегистрироваться
                         </button>
                     </>
                 )}

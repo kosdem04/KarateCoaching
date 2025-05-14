@@ -1,7 +1,7 @@
 import './SignUp.css';
 import { useState } from "react";
 import api from "../../api/axios.js";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function SignUp() {
     const [password, setPassword] = useState("");
@@ -110,6 +110,10 @@ export default function SignUp() {
                     </label>
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit" className="submit-button">Зарегистрироваться</button>
+                    <br/><br/>
+                    <label className="register-link">
+                        <Link to="/login/">Уже есть аккаунт</Link>
+                    </label>
                 </form>
             </div>
         </>
