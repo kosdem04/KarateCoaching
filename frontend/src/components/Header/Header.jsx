@@ -13,6 +13,7 @@ export default function Header() {
 
 
     useEffect(() => {
+        setMenuOpen(false);
         setTimeout(() => {
             window.scrollTo(0, 0);
         }, 0);
