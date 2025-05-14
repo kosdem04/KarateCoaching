@@ -84,7 +84,9 @@ export default function ResultList() {
                                                 <tbody>
                                                 {tournament.results.map((res, idx) => (
                                                     <tr key={idx} onClick={() => navigate(`/my_results/${res.id}/edit`)}>
-                                                        <td>{res.sportsman.last_name}</td>
+                                                        <td>{res.sportsman.last_name}{' '}
+                                                            {res.sportsman.first_name.charAt(0)}.
+                                                            {res.sportsman.patronymic ? res.sportsman.patronymic.charAt(0) + '.' : ''}</td>
                                                         <td>{res.place.name}</td>
                                                         <td>{res.points_scored}</td>
                                                         <td>{res.points_missed}</td>
