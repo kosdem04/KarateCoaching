@@ -92,9 +92,13 @@ export default function EditResultForm() {
                 <h1>Редактировать результат</h1>
             </div>
 
-            <button className="delete-btn" onClick={() => setShowModal(true)}>
-                Удалить
-            </button>
+            <div className="profile-header">
+                <div className="profile-actions">
+                    <button className="delete-btn" onClick={() => setShowModal(true)}>
+                        Удалить
+                    </button>
+                </div>
+            </div>
 
             <form className="result-form" onSubmit={handleSubmit}>
                 <label>
