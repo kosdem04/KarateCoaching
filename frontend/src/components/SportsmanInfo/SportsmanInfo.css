@@ -117,8 +117,34 @@ h2 {
     background: #e2e6ea;
 }
 
+.chart-section {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 5px solid black;
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+.chart-container {
+    width: 100%;
+    min-width: 300px;
+    height: 300px;
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
+    .chart-section {
+        padding: 10px;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .recharts-wrapper text {
+        font-size: 12px;
+    }
     .sportsman-table {
         display: table;
     }
