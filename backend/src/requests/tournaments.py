@@ -15,7 +15,7 @@ class TournamentRequest:
         query = (
             select(TournamentORM)
             .where(TournamentORM.user_id == user_id)
-            .order_by(desc(TournamentORM.date_end))
+            .order_by(desc(TournamentORM.date_start))
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()

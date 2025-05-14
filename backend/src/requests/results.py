@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, desc, delete
+from sqlalchemy import select, update, desc, delete, asc
 from sqlalchemy.orm import selectinload, joinedload
 
 from src.models.results import ResultORM, PlaceORM
@@ -16,14 +16,16 @@ class ResultRequest:
     async def  get_results_for_sportsman(cls, session:AsyncSession, sportsman_id: int):
         query = (
             select(ResultORM)
+            .join(ResultORM.tournament)
             .options(
                 selectinload(ResultORM.tournament),
                 selectinload(ResultORM.place),
             )
             .where(ResultORM.sportsman_id == sportsman_id)
+            .order_by(asc(TournamentORM.date_start))
         )
         result_query = await session.execute(query)
-        results = result_query.scalars().all()
+        results = result_query.unique().scalars().all()
         sportsman_results = [results_schemas.SportsmanResultModel.model_validate(r) for r in results]
         return sportsman_results
 
@@ -80,6 +82,7 @@ class ResultRequest:
                 ),
             )
             .where(TournamentORM.user_id == user_id)
+            .order_by(desc(TournamentORM.date_start))
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()

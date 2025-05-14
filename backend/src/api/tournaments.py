@@ -29,7 +29,7 @@ async def get_current_user_tournament(
 
 @router.get("/",
             tags=["Турниры"],
-            summary="Просмотр всех спортсменов",
+            summary="Просмотр всех турниров",
             response_model=list[tournaments_schemas.TournamentModel]
          )
 async def get_user_tournaments(session: SessionDep,
