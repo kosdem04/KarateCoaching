@@ -15,22 +15,19 @@ export default function LoginForm() {
         e.preventDefault();
         setError(null);
 
-        try {
-            console.log(api);
-            const response = await api.post("auth/login", {
-                email,
-                password,
+        api.post("auth/login", {
+            email,
+            password,
+        })
+            .then(response => {
+                const token = response.data.access_token;
+                login(token);
+                navigate("/");
+            })
+            .catch(error => {
+                console.log(error);
+                setError(error.response?.data?.detail || "Ошибка регистрации");
             });
-
-
-            const token = response.data.access_token;
-            login(token);
-
-            navigate("/");
-        } catch (err) {
-            console.log(err);
-            setError(err.response?.data?.detail || "Ошибка регистрации");
-        }
     };
 
     return (
