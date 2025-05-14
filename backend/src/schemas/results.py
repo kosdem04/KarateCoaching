@@ -40,6 +40,7 @@ class AddEditResultModel(BaseModel):
 
 
 class ResultModel(BaseModel):
+    id: int
     tournament_id: int
     sportsman: Optional[SportsmanSimpleModel]
     place: Optional[PlaceModel]
