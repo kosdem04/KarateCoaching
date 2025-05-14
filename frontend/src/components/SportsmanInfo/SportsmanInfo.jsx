@@ -71,21 +71,10 @@ export default function SportsmanInfo() {
                     <h1>{sportsmanInfo.last_name} {sportsmanInfo.first_name} {sportsmanInfo.patronymic}</h1>
                 </section>
 
-                {/*<section className="statistics">*/}
-                {/*    <h2>Статистика</h2>*/}
-                {/*    <p><b>Турниры:</b> 15</p>*/}
-                {/*    <p><b>Бои:</b> 67</p>*/}
-                {/*    <p><b>Победы:</b> 52</p>*/}
-                {/*    <p><b>Поражения:</b> 15</p>*/}
-                {/*    <p><b>Процент побед:</b> 42%</p>*/}
-                {/*    <p><b>Заработано баллов:</b> 150</p>*/}
-                {/*    <p><b>Пропущено баллов:</b> 50</p>*/}
-                {/*</section>*/}
-
                 <section className="fight-history">
                     <h2>История выступлений</h2>
                     <div className="table-container">
-                        <table>
+                        <table className="sportsman-table">
                             <thead>
                             <tr>
                                 <th>Турнир</th>

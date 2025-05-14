@@ -83,7 +83,7 @@ h2 {
 }
 
 /* Основные стили таблицы */
-.fight-history table {
+.fight-history .sportsman-table {
     width: 100%;
     min-width: 600px; /* Минимальная ширина, чтобы не сжималась на маленьких экранах */
     border-collapse: collapse;
@@ -119,6 +119,10 @@ h2 {
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    .sportsman-table {
+        display: table;
+    }
+
     .fight-history {
         padding: 10px;
     }
