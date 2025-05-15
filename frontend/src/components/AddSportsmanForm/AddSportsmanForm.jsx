@@ -39,6 +39,7 @@ export default function AddSportsmanForm() {
             .then(response  => {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Спортсмен успешно добавлен!', type: 'success' });
+                setFormData({  first_name: '', patronymic: '', last_name: '', date_of_birth: '', });
 //                 setTimeout(() => {
 //                     setMessage({ text: '', type: '' });
 //                     navigate("/my_sportsmen"); // переход через 2 секунды
