@@ -45,6 +45,12 @@ export default function AddResultForm() {
             .then(response  => {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Результат успешно добавлен!', type: 'success' });
+                setFormData({tournament_id: '',
+                    sportsman_id: '',
+                    place_id: '',
+                    points_scored: '',
+                    points_missed: '',
+                    number_of_fights: ''});
                 setTimeout(() => setMessage({ text: '', type: '' }), 3000);
             })
             .catch(error => {
