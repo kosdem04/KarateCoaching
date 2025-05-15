@@ -44,6 +44,8 @@ export default function ResultList() {
                 </div>
             </div>
 
+            <p className="table-hint">Чтобы посмотреть результаты, нажмите на нужный турнир</p>
+
             {!isMobile ? (
                 <table>
                     <thead>
@@ -58,7 +60,7 @@ export default function ResultList() {
                         <React.Fragment key={tournament.id}>
                             <tr
                                 onClick={() => toggleExpand(tournament.id)}
-                                style={{ cursor: 'pointer' }}
+                                style={{cursor: 'pointer'}}
                             >
                                 <td>{tournament.name}</td>
                                 <td>{new Date(tournament.date_start).toLocaleDateString('ru-RU')}</td>
@@ -83,7 +85,8 @@ export default function ResultList() {
                                                 </thead>
                                                 <tbody>
                                                 {tournament.results.map((res, idx) => (
-                                                    <tr key={idx} onClick={() => navigate(`/my_results/${res.id}/edit`)}>
+                                                    <tr key={idx}
+                                                        onClick={() => navigate(`/my_results/${res.id}/edit`)}>
                                                         <td>{res.sportsman.last_name}{' '}
                                                             {res.sportsman.first_name.charAt(0)}.
                                                             {res.sportsman.patronymic ? res.sportsman.patronymic.charAt(0) + '.' : ''}</td>
@@ -116,8 +119,10 @@ export default function ResultList() {
                             onClick={() => toggleExpand(tournament.id)}
                         >
                             <p><strong>Название:</strong> {tournament.name}</p>
-                            <p><strong>Начало:</strong> {new Date(tournament.date_start).toLocaleDateString('ru-RU')}</p>
-                            <p><strong>Окончание:</strong> {new Date(tournament.date_end).toLocaleDateString('ru-RU')}</p>
+                            <p><strong>Начало:</strong> {new Date(tournament.date_start).toLocaleDateString('ru-RU')}
+                            </p>
+                            <p><strong>Окончание:</strong> {new Date(tournament.date_end).toLocaleDateString('ru-RU')}
+                            </p>
 
                             {expandedTournamentId === tournament.id && (
                                 <div className="result-details">

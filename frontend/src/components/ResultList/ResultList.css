@@ -139,3 +139,9 @@ th {
         justify-content: center;
     }
 }
+
+.table-hint {
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #555;
+}
