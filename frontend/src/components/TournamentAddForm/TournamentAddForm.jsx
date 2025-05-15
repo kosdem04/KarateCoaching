@@ -30,9 +30,12 @@ export default function TournamentAddForm() {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Турнир успешно добавлен!', type: 'success' });
                 setFormData({ name: '', date_start: '', date_end: '' });
+//                 setTimeout(() => {
+//                     setMessage({ text: '', type: '' });
+//                     navigate("/my_tournaments"); // переход через 2 секунды
+//                 }, 1500);
                 setTimeout(() => {
                     setMessage({ text: '', type: '' });
-                    navigate("/my_tournaments"); // переход через 2 секунды
                 }, 1500);
             })
             .catch(error => {
