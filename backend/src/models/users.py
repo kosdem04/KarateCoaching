@@ -40,6 +40,21 @@ class UserORM(Base):
         secondary="user_roles"
     )
 
+    # один-к-одному: если пользователь — ученик
+    student_profile: Mapped[Optional["StudentProfileORM"]] = relationship(
+        "StudentProfileORM",
+        back_populates="student",
+        uselist=False,
+        foreign_keys="[SportsmanORM.student_id]"
+    )
+
+    # один-ко-многим: если пользователь — тренер
+    student: Mapped[List["StudentProfileORM"]] = relationship(
+        "StudentProfileORM",
+        back_populates="coach",
+        foreign_keys="[SportsmanORM.coach_id]"
+    )
+
 
 
 class RoleORM(Base):

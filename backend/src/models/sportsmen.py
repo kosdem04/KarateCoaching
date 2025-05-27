@@ -47,24 +47,24 @@ class StudentProfileORM(Base):
         nullable=True
     )
 
-    # # связи
-    # student: Mapped["UserORM"] = relationship(
-    #     "UserORM",
-    #     back_populates="student_profile",
-    #     foreign_keys=[student_id]
-    # )
-    #
-    # coach: Mapped["UserORM"] = relationship(
-    #     "UserORM",
-    #     back_populates="sportsmen",
-    #     foreign_keys=[coach_id]
-    # )
-    #
-    # group: Mapped[Optional["GroupORM"]] = relationship(
-    #     "GroupORM",
-    #     back_populates="students"
-    # )
-    #
+    # связи
+    student: Mapped["UserORM"] = relationship(
+        "UserORM",
+        back_populates="student_profile",
+        foreign_keys=[student_id]
+    )
+
+    coach: Mapped["UserORM"] = relationship(
+        "UserORM",
+        back_populates="student",
+        foreign_keys=[coach_id]
+    )
+
+    group: Mapped[Optional["GroupORM"]] = relationship(
+        "GroupORM",
+        back_populates="students"
+    )
+
     # results: Mapped[List["ResultORM"]] = relationship(
     #     "ResultORM",
     #     back_populates="students",
