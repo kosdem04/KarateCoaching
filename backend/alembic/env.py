@@ -24,6 +24,7 @@ from src.models.users import UserORM
 from src.models.tournaments import TournamentORM
 from src.models.sportsmen import SportsmanORM
 from src.models.results import ResultORM
+from src.models.groups import GroupORM
 from src.database import Base
 target_metadata = Base.metadata
 
