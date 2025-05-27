@@ -7,6 +7,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["alembic", "upgrade", "head"]
-
-CMD ["python", "-m", "src.main"]
+# Применить миграции и запустить сервер
+CMD alembic upgrade head && python -m src.main
