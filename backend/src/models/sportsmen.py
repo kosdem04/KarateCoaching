@@ -27,3 +27,46 @@ class SportsmanORM(Base):
         back_populates="sportsman",
         cascade='all, delete'
     )
+
+
+class StudentProfileORM(Base):
+    __tablename__ = "student_profiles"
+
+    student_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        primary_key=True
+    )
+
+    coach_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True
+    )
+
+    group_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("groups.id", ondelete="SET NULL"),
+        nullable=True
+    )
+
+    # # связи
+    # student: Mapped["UserORM"] = relationship(
+    #     "UserORM",
+    #     back_populates="student_profile",
+    #     foreign_keys=[student_id]
+    # )
+    #
+    # coach: Mapped["UserORM"] = relationship(
+    #     "UserORM",
+    #     back_populates="sportsmen",
+    #     foreign_keys=[coach_id]
+    # )
+    #
+    # group: Mapped[Optional["GroupORM"]] = relationship(
+    #     "GroupORM",
+    #     back_populates="students"
+    # )
+    #
+    # results: Mapped[List["ResultORM"]] = relationship(
+    #     "ResultORM",
+    #     back_populates="students",
+    #     cascade='all, delete'
+    # )
