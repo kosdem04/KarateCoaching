@@ -7,4 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+CMD ["alembic", "upgrade", "head"]
+
 CMD ["python", "-m", "src.main"]
