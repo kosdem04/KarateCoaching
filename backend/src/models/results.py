@@ -58,3 +58,8 @@ class ResultORM(Base):
         "PlaceORM",
         back_populates="results"
     )
+
+    student: Mapped["StudentProfileORM"] = relationship(
+        "StudentProfileORM",
+        back_populates="results"
+    )

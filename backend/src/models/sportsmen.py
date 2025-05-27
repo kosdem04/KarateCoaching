@@ -65,8 +65,8 @@ class StudentProfileORM(Base):
         back_populates="students"
     )
 
-    # results: Mapped[List["ResultORM"]] = relationship(
-    #     "ResultORM",
-    #     back_populates="student",
-    #     cascade='all, delete'
-    # )
+    results: Mapped[List["ResultORM"]] = relationship(
+        "ResultORM",
+        back_populates="student",
+        cascade='all, delete'
+    )
