@@ -27,6 +27,9 @@ class ResultORM(Base):
     sportsman_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('sportsmen.id', ondelete='SET NULL')
     )
+    student_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey('student_profiles.student_id', ondelete='SET NULL')
+    )
     tournament_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('tournaments.id', ondelete='SET NULL')
     )
