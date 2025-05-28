@@ -6,43 +6,31 @@ import {useAuth} from "../../AuthContext.jsx";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
     const { pathname } = useLocation();
     const { isAuthenticated, logout } = useAuth();
 
-
-
+    // Закрытие меню при смене страницы
     useEffect(() => {
         setMenuOpen(false);
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 0);
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+        setTimeout(() => window.scrollTo(0, 0), 0);
     }, [pathname]);
 
     return (
-        <header className={scrolled ? 'scrolled' : ''}>
+        <header className="static-header">
             <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</div>
             <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
                 {isAuthenticated ? (
                     <>
                         <Link to="/my_sportsmen/">Мои спортсмены</Link>
-                        <Link to={`/my_tournaments/`}>Турниры</Link>
-                        <Link to={`/my_results/`}>Результаты</Link>
+                        <Link to="/my_tournaments/">Турниры</Link>
+                        <Link to="/my_results/">Результаты</Link>
                         <button onClick={logout} className="logout-button">Выйти</button>
                     </>
                 ) : (
                     <Link to="/login/">Войти</Link>
                 )}
             </nav>
-            <div className="logo"><Link to={`/`}>Тренерская</Link></div>
+            <div className="logo"><Link to="/">Тренерская</Link></div>
         </header>
     );
 }

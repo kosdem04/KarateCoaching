@@ -45,14 +45,14 @@ class UserORM(Base):
         "StudentProfileORM",
         back_populates="student",
         uselist=False,
-        foreign_keys="[SportsmanORM.student_id]"
+        foreign_keys="[StudentProfileORM.student_id]"
     )
 
     # один-ко-многим: если пользователь — тренер
     student: Mapped[List["StudentProfileORM"]] = relationship(
         "StudentProfileORM",
         back_populates="coach",
-        foreign_keys="[SportsmanORM.coach_id]"
+        foreign_keys="[StudentProfileORM.coach_id]"
     )
 
 
@@ -63,6 +63,12 @@ class RoleORM(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50), unique=True)
     code: Mapped[str] = mapped_column(String(50), unique=True)
+
+    user_roles: Mapped[List["UserRoleORM"]] = relationship(
+        "UserRoleORM",
+        back_populates="role",
+        cascade='all, delete'
+    )
 
     users: Mapped[List["UserORM"]] = relationship(
         "UserORM",
@@ -79,4 +85,9 @@ class UserRoleORM(Base):
                                          primary_key=True)
     role_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('roles.id', ondelete='SET NULL')
+    )
+
+    role: Mapped["RoleORM"] = relationship(
+        "RoleORM",
+        back_populates="user_roles"
     )

@@ -3,9 +3,8 @@ import datetime
 from authlib.jose import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import HTTPException, Depends
+from config import SECURITY_ALGORITHM, SECURITY_SECRET_KEY
 
-SECRET_KEY = "super-secret-key"
-ALGORITHM = "HS256"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -23,7 +22,7 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta = datetime
         "iat": now,
         "sub": data["sub"],
     }
-    return jwt.encode({"alg": ALGORITHM}, payload, SECRET_KEY).decode("utf-8")
+    return jwt.encode({"alg": SECURITY_ALGORITHM}, payload, SECURITY_SECRET_KEY).decode("utf-8")
 
 
 security = HTTPBearer()
@@ -32,7 +31,7 @@ security = HTTPBearer()
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     try:
-        claims = jwt.decode(token, SECRET_KEY)
+        claims = jwt.decode(token, SECURITY_SECRET_KEY)
         claims.validate()  # проверяет срок жизни
         return claims["sub"]
     except Exception as e:

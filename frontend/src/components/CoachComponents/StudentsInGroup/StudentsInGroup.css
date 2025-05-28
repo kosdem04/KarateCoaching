@@ -1,0 +1,61 @@
+.group-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    z-index: 2000;
+    animation: slideInFromRight 0.3s ease forwards;
+}
+
+.overlay-backdrop {
+    width: 20%;
+    background-color: rgba(0, 0, 0, 0.1); /* прозрачность */
+    cursor: pointer;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.group-details-panel {
+    width: 80%;
+    background-color: #fff;
+    padding: 24px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.students-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.students-list li {
+    padding: 8px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}

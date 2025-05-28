@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, desc, or_
 from sqlalchemy.orm import selectinload, joinedload
-from src.models.users import UserORM
+from src.models.users import UserORM, UserRoleORM
 from src.security import hash_password, verify_password
 from fastapi import HTTPException
 from starlette import status
@@ -25,7 +25,6 @@ class AuthRequest:
                 email=user_data.email,
                 password=hash_password(user_data.password),
                 date_joined=datetime.datetime.now(datetime.UTC),
-                is_admin=False,
                 img_url="https://s3.twcstorage.ru/414c6625-e8dd2907-0748-4c5c-8061-bbabd520cf1f/default-avatar.png",
             ))
             await session.commit()
@@ -59,6 +58,19 @@ class AuthRequest:
             .where(UserORM.id == user_id)
         )
         return await session.scalar(query)
+
+    @classmethod
+    async def get_user_roles(cls, session: AsyncSession, user_id: int):
+        query = (
+            select(UserRoleORM)
+            .options(
+                selectinload(UserRoleORM.role),
+            )
+            .where(UserRoleORM.user_id == user_id)
+        )
+        result_query = await session.execute(query)
+        roles = result_query.scalars().all()
+        return roles
 
     @classmethod
     async def get_admin(cls, session: AsyncSession, email: str):

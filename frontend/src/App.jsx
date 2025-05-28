@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-import MainPage from "./components/MainPage/MainPage.jsx";
+import MainPage from "./pages/MainPage/MainPage.jsx";
 import LoginForm from "./components/LoginForm/LoginForm.jsx";
 import SignUp from "./components/SignUp/SignUp.jsx";
 import MySportsmenPage from "./components/MySportsmenPage/MySportsmenPage.jsx";
@@ -15,6 +15,7 @@ import EditSportsmanForm from "./components/EditSportsmanForm/EditSportsmanForm.
 import ResultList from "./components/ResultList/ResultList.jsx";
 import EditResultForm from "./components/EditResultForm/EditResultForm.jsx";
 import EditTournamentForm from "./components/EditTournamentForm/EditTournamentForm.jsx";
+import CoachProfile from "./pages/Coaches/CoachProfile/CoachProfile.jsx";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                         <Route path="/" element={<MainPage />} />
                         <Route path="/login/" element={<LoginForm />} />
                         <Route path="/sign_up/" element={<SignUp />} />
+                        <Route path="/coach_profile/" element={<CoachProfile />} />
                         <Route
                             path="/my_sportsmen/"
                             element={

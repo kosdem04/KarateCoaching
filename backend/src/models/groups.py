@@ -20,3 +20,9 @@ class GroupORM(Base):
         "UserORM",
         back_populates="groups"
     )
+
+    students: Mapped[List["StudentProfileORM"]] = relationship(
+        "StudentProfileORM",
+        back_populates="group",
+        cascade='all, delete-orphan'
+    )
