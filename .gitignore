@@ -2,3 +2,4 @@
 node_modules/
 
 /backend/alembic.ini
+/backend/src/main.py
