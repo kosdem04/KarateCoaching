@@ -3,7 +3,7 @@ import datetime
 from authlib.jose import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import HTTPException, Depends
-from config import SECURITY_ALGORITHM, SECURITY_SECRET_KEY
+from src.config import SECURITY_ALGORITHM, SECURITY_SECRET_KEY
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
