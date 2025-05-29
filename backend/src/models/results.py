@@ -24,9 +24,6 @@ class ResultORM(Base):
     __tablename__ = 'results'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    sportsman_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey('sportsmen.id', ondelete='SET NULL')
-    )
     student_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('student_profiles.student_id', ondelete='SET NULL')
     )
@@ -44,11 +41,6 @@ class ResultORM(Base):
     )
     efficiency: Mapped[Decimal] = mapped_column(
         Numeric(5, 2), nullable=False,
-    )
-
-    sportsman: Mapped["SportsmanORM"] = relationship(
-        "SportsmanORM",
-        back_populates="results"
     )
     tournament: Mapped["TournamentORM"] = relationship(
         "TournamentORM",
