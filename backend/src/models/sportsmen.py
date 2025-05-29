@@ -48,7 +48,7 @@ class StudentProfileORM(Base):
     )
 
     # связи
-    student: Mapped["UserORM"] = relationship(
+    student_data: Mapped["UserORM"] = relationship(
         "UserORM",
         back_populates="student_profile",
         foreign_keys=[student_id]

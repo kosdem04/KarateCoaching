@@ -46,3 +46,25 @@ class ResulSimpleModel(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class StudentModel(BaseModel):
+    id: int
+    first_name: str
+    patronymic: Optional[str]
+    last_name: str
+    email: EmailStr
+    date_of_birth: Optional[datetime.date]
+    phone_number: Optional[str]
+    img_url: str
+
+    class Config:
+        from_attributes = True
+
+
+class PlaceModel(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True

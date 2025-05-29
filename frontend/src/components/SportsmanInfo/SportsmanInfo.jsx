@@ -10,7 +10,7 @@ import {
 
 export default function SportsmanInfo() {
     const { id } = useParams();
-    const [sportsmanInfo, setSportsmanInfo] = useState({});
+    const [studentInfo, setStudentInfo] = useState({});
     const [resultsInfo, setResultsInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -23,10 +23,21 @@ export default function SportsmanInfo() {
     };
 
     useEffect(() => {
-        api.get(`sportsmen/${id}`)
+        api.get(`students/${id}/`)
             .then(response => {
-                setSportsmanInfo(response.data.sportsman);
-                setResultsInfo(response.data.results);
+                setStudentInfo(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Ошибка при получении данных:', error);
+                setLoading(false);
+                if (error.response?.status === 403) {
+                    navigate("/"); // редирект на главную
+                }
+            });
+        api.get(`students/${id}/results/`)
+            .then(response => {
+                setResultsInfo(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -39,7 +50,7 @@ export default function SportsmanInfo() {
     }, [id]);
 
     const handleDelete = () => {
-        api.delete(`sportsmen/${id}`)
+        api.delete(`students/${id}/`)
             .then(response => {
                 navigate("/my_sportsmen");
                 // Можно перенаправить пользователя или обновить состояние
@@ -70,8 +81,8 @@ export default function SportsmanInfo() {
                 </div>
             </div>
             <section className="fighter-profile">
-                <img src={sportsmanInfo.img_url} alt={sportsmanInfo.last_name}/>
-                <h1>{sportsmanInfo.last_name} {sportsmanInfo.first_name} {sportsmanInfo.patronymic}</h1>
+                <img src={studentInfo.student_data.img_url} alt={studentInfo.student_data.last_name}/>
+                <h1>{studentInfo.student_data.last_name} {studentInfo.student_data.first_name} {studentInfo.student_data.patronymic}</h1>
             </section>
 
             <section className="chart-section">

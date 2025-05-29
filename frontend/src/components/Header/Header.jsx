@@ -21,8 +21,8 @@ export default function Header() {
             <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
                 {isAuthenticated ? (
                     <>
-                        <Link to="/my_sportsmen/">Мои спортсмены</Link>
-                        <Link to="/my_tournaments/">Турниры</Link>
+                        <Link to="/my_sportsmen/">Мои ученики</Link>
+                        <Link to="/my_tournaments/">Мероприятия</Link>
                         <Link to="/my_results/">Результаты</Link>
                         <button onClick={logout} className="logout-button">Выйти</button>
                     </>

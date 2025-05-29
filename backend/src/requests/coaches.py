@@ -28,7 +28,7 @@ class CoachRequest:
         query = (
             select(StudentProfileORM)
             .options(
-                selectinload(StudentProfileORM.student),
+                selectinload(StudentProfileORM.student_data),
             )
             .where(StudentProfileORM.group_id == group_id)
         )

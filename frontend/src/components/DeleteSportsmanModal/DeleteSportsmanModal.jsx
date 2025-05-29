@@ -8,7 +8,7 @@ const DeleteSportsmanModal = ({ show, onClose, onConfirm }) => {
         <div className="modal-overlay">
             <div className="modal">
                 <h2>Подтверждение удаления</h2>
-                <p>Вы уверены, что хотите удалить этого спортсмена?</p>
+                <p>Вы уверены, что хотите удалить этого ученика из базы данных?</p>
                 <div className="modal-actions">
                     <button className="cancel-button" onClick={onClose}>Отмена</button>
                     <button className="delete-button" onClick={onConfirm}>Удалить</button>

@@ -31,7 +31,7 @@ export default function AddSportsmanForm() {
 
         console.log(data);
 
-        api.post("sportsmen/add", data, {
+        api.post("students/add", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }

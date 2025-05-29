@@ -7,16 +7,16 @@ import api from "../../api/axios.js";
 
 export default function MySportsmenPage() {
 
-    const [sportsmen, setSportsmen] = useState([]);
+    const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const navigate = useNavigate();
 
 
     useEffect(() => {
-        api.get('sportsmen/')
+        api.get('students/')
             .then(response => {
-                setSportsmen(response.data);
+                setStudents(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -56,20 +56,20 @@ export default function MySportsmenPage() {
                             <th>Фамилия</th>
                             <th>Имя</th>
                         </tr>
-                        {sportsmen.map((sportsman, index) => (
-                            <tr key={sportsman.id} onClick={() => navigate(`/my_sportsmen/${sportsman.id}`)} style={{ cursor: 'pointer' }}>
-                                <td>{sportsman.last_name}</td>
-                                <td>{sportsman.first_name}</td>
+                        {students.map((student, index) => (
+                            <tr key={student.id} onClick={() => navigate(`/my_sportsmen/${student.id}`)} style={{ cursor: 'pointer' }}>
+                                <td>{student.last_name}</td>
+                                <td>{student.first_name}</td>
                             </tr>
                         ))}
                     </table>
                 ) : (
                     <div className="mobile-cards">
-                        {sportsmen.map((sportsman) => (
-                            <div className="mobile-card" key={sportsman.id}
-                                 onClick={() => navigate(`/my_sportsmen/${sportsman.id}`)}>
-                                <p><strong>Фамилия:</strong> {sportsman.last_name}</p>
-                                <p><strong>Имя:</strong> {sportsman.first_name}</p>
+                        {students.map((student) => (
+                            <div className="mobile-card" key={student.id}
+                                 onClick={() => navigate(`/my_sportsmen/${student.id}`)}>
+                                <p><strong>Фамилия:</strong> {student.last_name}</p>
+                                <p><strong>Имя:</strong> {student.first_name}</p>
                             </div>
                         ))}
                     </div>

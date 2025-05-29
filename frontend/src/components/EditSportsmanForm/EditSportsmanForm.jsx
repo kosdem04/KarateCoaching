@@ -19,12 +19,12 @@ export default function EditSportsmanForm() {
     const [newAvatarFile, setNewAvatarFile] = useState(null);
 
     useEffect(() => {
-        api.get(`sportsmen/${id}`)
+        api.get(`students/${id}`)
             .then(response => {
-                const data = response.data.sportsman;
-                const formattedDate = new Date(data.date_of_birth).toISOString().split('T')[0];
-                setFormData({ ...data, date_of_birth: formattedDate });
-                setOriginalData({ ...data, date_of_birth: formattedDate });
+                const data = response.data;
+                const formattedDate = new Date(data.student_data.date_of_birth).toISOString().split('T')[0];
+                setFormData({ ...data.student_data, date_of_birth: formattedDate });
+                setOriginalData({ ...data.student_data, date_of_birth: formattedDate });
             })
             .catch(error => {
                 console.error('Ошибка при загрузке спортсмена:', error);
@@ -55,7 +55,7 @@ export default function EditSportsmanForm() {
             data.append('avatar', newAvatarFile);
         }
 
-        api.put(`sportsmen/${id}/update`, data, {
+        api.put(`students/${id}/`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

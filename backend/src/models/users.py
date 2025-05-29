@@ -43,7 +43,7 @@ class UserORM(Base):
     # один-к-одному: если пользователь — ученик
     student_profile: Mapped[Optional["StudentProfileORM"]] = relationship(
         "StudentProfileORM",
-        back_populates="student",
+        back_populates="student_data",
         uselist=False,
         foreign_keys="[StudentProfileORM.student_id]"
     )
