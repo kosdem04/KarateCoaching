@@ -20,7 +20,7 @@ export default function EditTournamentForm() {
 
     // Загрузка данных спортсмена
     useEffect(() => {
-        api.get(`tournaments/${id}`)
+        api.get(`events/${id}`)
             .then(response => {
                 const data = response.data;
 
@@ -40,12 +40,12 @@ export default function EditTournamentForm() {
                 });
             })
             .catch(error => {
-                console.error('Ошибка при загрузке спортсмена:', error);
+                console.error('Ошибка при загрузке мероприятия:', error);
             });
     }, [id]);
 
     const handleDelete = () => {
-        api.delete(`tournaments/${id}`)
+        api.delete(`events/${id}`)
             .then(response => {
                 navigate("/my_tournaments");
                 // Можно перенаправить пользователя или обновить состояние
@@ -66,7 +66,7 @@ export default function EditTournamentForm() {
         e.preventDefault();
         if (!isChanged) return;
 
-        api.put(`tournaments/${id}/update`, formData)
+        api.put(`events/${id}`, formData)
             .then(() => {
                 setMessage({ text: 'Изменения сохранены!', type: 'success' });
                 setOriginalData(formData);

@@ -25,10 +25,10 @@ export default function TournamentAddForm() {
             return;
         }
 
-        api.post("tournaments/add",  formData)
+        api.post("events/add",  formData)
             .then(response  => {
                 console.log("Успешно добавлено:");
-                setMessage({ text: 'Турнир успешно добавлен!', type: 'success' });
+                setMessage({ text: 'Мероприятие успешно добавлено!', type: 'success' });
                 setFormData({ name: '', date_start: '', date_end: '' });
 //                 setTimeout(() => {
 //                     setMessage({ text: '', type: '' });
@@ -39,7 +39,7 @@ export default function TournamentAddForm() {
                 }, 1500);
             })
             .catch(error => {
-                setMessage({ text: 'Такой турнир уже есть', type: 'error' });
+                setMessage({ text: 'Такое мероприятие уже есть', type: 'error' });
                 console.error('Ошибка при получении данных:', error);
                 setTimeout(() => setMessage({ text: '', type: '' }), 3000);
             })

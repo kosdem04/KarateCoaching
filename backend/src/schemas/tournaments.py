@@ -3,7 +3,7 @@ from typing import Optional
 import datetime
 
 
-class AddEditTournamentModel(BaseModel):
+class AddEditEventModel(BaseModel):
     name: str
     date_start: datetime.datetime
     date_end: datetime.datetime
@@ -18,7 +18,7 @@ class EventModel(BaseModel):
     name: str
     date_start: datetime.datetime
     date_end: datetime.datetime
-    user_id: int
+    coach_id: int
 
     class Config:
         from_attributes = True

@@ -17,7 +17,7 @@ class ResultRequest:
     async def add_result(cls, session, data: results_schemas.AddEditResultModel):
         query = (
             select(ResultORM)
-            .where(ResultORM.event == data.tournament_id,
+            .where(ResultORM.event_id == data.event_id,
                    ResultORM.student_id == data.student_id,
                    ResultORM.place_id == data.place_id,
                    ResultORM.points_scored == data.points_scored,
@@ -28,7 +28,7 @@ class ResultRequest:
         result = await session.scalar(query)
         if not result:
             session.add(ResultORM(
-                tournament_id=data.tournament_id,
+                event_id=data.event_id,
                 student_id=data.student_id,
                 place_id=data.place_id,
                 points_scored=data.points_scored,
@@ -73,7 +73,7 @@ class ResultRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        user_results = [results_schemas.TournamentWithResultModel.model_validate(r) for r in results]
+        user_results = [results_schemas.EventWithResultModel.model_validate(r) for r in results]
         return user_results
 
     @classmethod

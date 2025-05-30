@@ -26,7 +26,7 @@ async def get_places(session: SessionDep):
 @router.get("/",
             tags=["Результаты"],
             summary="Просмотр всех результатов",
-            response_model=list[results_schemas.TournamentWithResultModel]
+            response_model=list[results_schemas.EventWithResultModel]
          )
 async def get_user_results(session: SessionDep,
                                user_id: AuthUserDep):

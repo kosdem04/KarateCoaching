@@ -14,7 +14,7 @@ class PlaceModel(BaseModel):
 
 
 class AddEditResultModel(BaseModel):
-    tournament_id: int
+    event_id: int
     student_id: int
     place_id: int
     points_scored: int
@@ -27,7 +27,7 @@ class AddEditResultModel(BaseModel):
 
 class ResultModel(BaseModel):
     id: int
-    tournament_id: int
+    event_id: int
     student: Optional[StudentProfileModel]
     place: Optional[PlaceModel]
     points_scored: int
@@ -40,12 +40,12 @@ class ResultModel(BaseModel):
         from_attributes = True
 
 
-class TournamentWithResultModel(BaseModel):
+class EventWithResultModel(BaseModel):
     id: int
     name: str
     date_start: datetime.datetime
     date_end: datetime.datetime
-    user_id: int
+    coach_id: int
     results: list[ResultModel]
 
     class Config:

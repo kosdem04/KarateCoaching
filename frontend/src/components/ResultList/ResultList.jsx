@@ -4,16 +4,16 @@ import api from "../../api/axios.js";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ResultList() {
-    const [tournaments, setTournaments] = useState([]);
+    const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [expandedTournamentId, setExpandedTournamentId] = useState(null);
+    const [expandedEventId, setExpandedEventId] = useState(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const navigate = useNavigate();
 
     useEffect(() => {
         api.get('results/')
             .then(response => {
-                setTournaments(response.data);
+                setEvents(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -27,7 +27,7 @@ export default function ResultList() {
     }, []);
 
     const toggleExpand = (id) => {
-        setExpandedTournamentId(prev => (prev === id ? null : id));
+        setExpandedEventId(prev => (prev === id ? null : id));
     };
 
     if (loading) return <div>Загрузка...</div>;
@@ -56,21 +56,21 @@ export default function ResultList() {
                     </tr>
                     </thead>
                     <tbody>
-                    {tournaments.map((tournament) => (
-                        <React.Fragment key={tournament.id}>
+                    {events.map((event) => (
+                        <React.Fragment key={event.id}>
                             <tr
-                                onClick={() => toggleExpand(tournament.id)}
+                                onClick={() => toggleExpand(event.id)}
                                 style={{cursor: 'pointer'}}
                             >
-                                <td>{tournament.name}</td>
-                                <td>{new Date(tournament.date_start).toLocaleDateString('ru-RU')}</td>
-                                <td>{new Date(tournament.date_end).toLocaleDateString('ru-RU')}</td>
+                                <td>{event.name}</td>
+                                <td>{new Date(event.date_start).toLocaleDateString('ru-RU')}</td>
+                                <td>{new Date(event.date_end).toLocaleDateString('ru-RU')}</td>
                             </tr>
 
-                            {expandedTournamentId === tournament.id && (
+                            {expandedEventId === event.id && (
                                 <tr>
                                     <td colSpan="3">
-                                        {tournament.results?.length > 0 ? (
+                                        {event.results?.length > 0 ? (
                                             <table className="inner-table">
                                                 <thead>
                                                 <tr>
@@ -84,7 +84,7 @@ export default function ResultList() {
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {tournament.results.map((res, idx) => (
+                                                {event.results.map((res, idx) => (
                                                     <tr key={idx}
                                                         onClick={() => navigate(`/my_results/${res.id}/edit`)}>
                                                         <td>{res.student.student_data.last_name}{' '}
@@ -112,22 +112,22 @@ export default function ResultList() {
                 </table>
             ) : (
                 <div className="mobile-results">
-                    {tournaments.map((tournament) => (
+                    {events.map((event) => (
                         <div
                             className="mobile-result-card"
-                            key={tournament.id}
-                            onClick={() => toggleExpand(tournament.id)}
+                            key={event.id}
+                            onClick={() => toggleExpand(event.id)}
                         >
-                            <p><strong>Название:</strong> {tournament.name}</p>
-                            <p><strong>Начало:</strong> {new Date(tournament.date_start).toLocaleDateString('ru-RU')}
+                            <p><strong>Название:</strong> {event.name}</p>
+                            <p><strong>Начало:</strong> {new Date(event.date_start).toLocaleDateString('ru-RU')}
                             </p>
-                            <p><strong>Окончание:</strong> {new Date(tournament.date_end).toLocaleDateString('ru-RU')}
+                            <p><strong>Окончание:</strong> {new Date(event.date_end).toLocaleDateString('ru-RU')}
                             </p>
 
-                            {expandedTournamentId === tournament.id && (
+                            {expandedEventId === event.id && (
                                 <div className="result-details">
-                                    {tournament.results?.length > 0 ? (
-                                        tournament.results.map((res, idx) => (
+                                    {event.results?.length > 0 ? (
+                                        event.results.map((res, idx) => (
                                             <div key={idx} onClick={() => navigate(`/my_results/${res.id}/edit`)}>
                                                 <div><strong>Спортсмен:</strong> {res.student.student_data.last_name}</div>
                                                 <div><strong>Место:</strong> {res.place.name}</div>

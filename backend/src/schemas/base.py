@@ -22,7 +22,7 @@ class Token(BaseModel):
 
 
 class ResulSimpleModel(BaseModel):
-    tournament_id: int
+    event_id: int
     student_id: int
     place_id: int
     points_scored: int

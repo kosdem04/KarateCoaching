@@ -3,13 +3,13 @@ import './AddResultForm.css';
 import api from "../../api/axios.js";
 
 export default function AddResultForm() {
-    const [tournaments, setTournaments] = useState([]);
+    const [events, setEvents] = useState([]);
     const [places, setPlaces] = useState([]);
     const [students, setStudents] = useState([]);
     const [message, setMessage] = useState({ text: '', type: '' });
 
     const [formData, setFormData] = useState({
-        tournament_id: '',
+        event_id: '',
         student_id: '',
         place_id: '',
         points_scored: '',
@@ -18,9 +18,9 @@ export default function AddResultForm() {
     });
 
     useEffect(() => {
-        api.get("tournaments/")
+        api.get("events/")
             .then(response  => {
-                setTournaments(response.data);
+                setEvents(response.data);
             });
         api.get("results/places/")
             .then(response  => {
@@ -45,7 +45,7 @@ export default function AddResultForm() {
             .then(response  => {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Результат успешно добавлен!', type: 'success' });
-                setFormData({tournament_id: '',
+                setFormData({event_id: '',
                     student_id: '',
                     place_id: '',
                     points_scored: '',
@@ -70,16 +70,18 @@ export default function AddResultForm() {
 
                 <form className="result-form" onSubmit={handleSubmit}>
                     <label>
-                        Соревнование:
+                        Мероприятие:
                         <select
-                            name="tournament_id"
-                            value={formData.tournament_id}
+                            name="event_id"
+                            value={formData.event_id}
                             onChange={handleChange}
                             required
                         >
                             <option value="">Выберите...</option>
-                            {tournaments.map(t => (
-                                <option key={t.id} value={t.id}>{t.name}</option>
+                            {events.map(event => (
+                                <option
+                                    key={event.id}
+                                    value={event.id}>{event.name}</option>
                             ))}
                         </select>
                     </label>
