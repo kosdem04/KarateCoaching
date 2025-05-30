@@ -30,11 +30,6 @@ class TournamentORM(Base):
         "UserORM",
         back_populates="tournaments"
     )
-    type: Mapped["EventTypeORM"] = relationship(
-        "EventTypeORM",
-        back_populates="events"
-    )
-
 
 
 class EventORM(Base):
@@ -56,14 +51,14 @@ class EventORM(Base):
     #     back_populates="tournament",
     #     passive_deletes=True
     # )
-    # user: Mapped["UserORM"] = relationship(
-    #     "UserORM",
-    #     back_populates="tournaments"
-    # )
-    # type: # Mapped["EventTypeORM"] = relationship(
-    #     "EventTypeORM",
-    #     back_populates="events"
-    # )
+    coach: Mapped["UserORM"] = relationship(
+        "UserORM",
+        back_populates="events"
+    )
+    type: Mapped["EventTypeORM"] = relationship(
+        "EventTypeORM",
+        back_populates="events"
+    )
 
 
 
@@ -73,8 +68,8 @@ class EventTypeORM(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True)
 
-    events: Mapped[List["TournamentORM"]] = relationship(
-        "TournamentORM",
+    events: Mapped[List["EventORM"]] = relationship(
+        "EventORM",
         back_populates="type",
         passive_deletes=True
     )
