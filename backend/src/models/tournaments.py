@@ -7,15 +7,6 @@ from sqlalchemy import Numeric
 from decimal import Decimal
 
 
-class TournamentORM(Base):
-    __tablename__ = 'tournaments'
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(100))
-    date_start: Mapped[datetime.datetime]
-    date_end: Mapped[datetime.datetime]
-
-
 class EventORM(Base):
     __tablename__ = 'events'
 
