@@ -23,7 +23,7 @@ class EventORM(Base):
 
     results: Mapped[List["ResultORM"]] = relationship(
         "ResultORM",
-        back_populates="events",
+        back_populates="event",
         passive_deletes=True
     )
     coach: Mapped["UserORM"] = relationship(

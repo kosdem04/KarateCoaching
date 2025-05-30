@@ -13,7 +13,7 @@ class AddEditTournamentModel(BaseModel):
 
 
 
-class TournamentModel(BaseModel):
+class EventModel(BaseModel):
     id: int
     name: str
     date_start: datetime.datetime

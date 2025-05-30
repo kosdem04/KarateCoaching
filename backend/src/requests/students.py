@@ -12,7 +12,7 @@ import src.schemas.students as students_schemas
 from src.models.users import UserORM
 from src.config import DEFAULT_AVATAR
 from src.models.results import ResultORM, PlaceORM
-from src.models.tournaments import TournamentORM
+from src.models.tournaments import EventORM
 import src.schemas.results as results_schemas
 
 
@@ -134,13 +134,13 @@ class StudentRequest:
     async def get_student_results(cls, session: AsyncSession, student_id: int):
         query = (
             select(ResultORM)
-            .join(ResultORM.tournament)
+            .join(ResultORM.event)
             .options(
-                selectinload(ResultORM.tournament),
+                selectinload(ResultORM.event),
                 selectinload(ResultORM.place),
             )
             .where(ResultORM.student_id == student_id)
-            .order_by(asc(TournamentORM.date_start))
+            .order_by(asc(EventORM.date_start))
         )
         result_query = await session.execute(query)
         results = result_query.unique().scalars().all()

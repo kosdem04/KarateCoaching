@@ -3,7 +3,6 @@ import datetime
 from typing import Optional
 from src.schemas.base import StudentModel
 from src.schemas.base import PlaceModel
-from src.schemas.tournaments import TournamentModel
 
 
 class StudentProfileModel(BaseModel):

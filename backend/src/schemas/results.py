@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
 import datetime
-from src.schemas.tournaments import TournamentModel
 from src.schemas.base import StudentModel
 from src.schemas.students import StudentProfileModel
 

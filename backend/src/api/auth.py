@@ -5,6 +5,7 @@ from src.schemas.base import UserRegisterModel, UserLoginModel, Token
 from src.requests.auth import AuthRequest
 from src.security import create_access_token
 from src.models.groups import GroupORM
+from src.models.tournaments import EventORM
 
 router = APIRouter(
     prefix="/auth",

@@ -9,7 +9,7 @@ from fastapi import HTTPException
 from starlette import status
 
 from src.models.students import StudentProfileORM
-from src.models.tournaments import TournamentORM
+from src.models.tournaments import EventORM
 
 
 class ResultRequest:
@@ -17,7 +17,7 @@ class ResultRequest:
     async def add_result(cls, session, data: results_schemas.AddEditResultModel):
         query = (
             select(ResultORM)
-            .where(ResultORM.tournament_id == data.tournament_id,
+            .where(ResultORM.event == data.tournament_id,
                    ResultORM.student_id == data.student_id,
                    ResultORM.place_id == data.place_id,
                    ResultORM.points_scored == data.points_scored,
@@ -57,9 +57,9 @@ class ResultRequest:
     @classmethod
     async def get_results(cls, session: AsyncSession, user_id: int):
         query = (
-            select(TournamentORM)
+            select(EventORM)
             .options(
-                selectinload(TournamentORM.results)
+                selectinload(EventORM.results)
                 .options(
                     selectinload(ResultORM.place),
                     selectinload(ResultORM.student)
@@ -68,8 +68,8 @@ class ResultRequest:
                     ),
                 ),
             )
-            .where(TournamentORM.user_id == user_id)
-            .order_by(desc(TournamentORM.date_start))
+            .where(EventORM.coach_id == user_id)
+            .order_by(desc(EventORM.date_start))
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
