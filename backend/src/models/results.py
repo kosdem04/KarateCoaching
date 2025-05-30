@@ -30,6 +30,9 @@ class ResultORM(Base):
     tournament_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('tournaments.id', ondelete='SET NULL')
     )
+    event_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey('events.id', ondelete='SET NULL')
+    )
     place_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('places.id', ondelete='SET NULL')
     )
@@ -44,6 +47,10 @@ class ResultORM(Base):
     )
     tournament: Mapped["TournamentORM"] = relationship(
         "TournamentORM",
+        back_populates="results"
+    )
+    event: Mapped["EventORM"] = relationship(
+        "EventORM",
         back_populates="results"
     )
     place: Mapped["PlaceORM"] = relationship(

@@ -22,7 +22,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from src.models.users import UserORM
 from src.models.tournaments import TournamentORM
-from src.models.sportsmen import StudentProfileORM
+from src.models.students import StudentProfileORM
 from src.models.results import ResultORM
 from src.models.groups import GroupORM
 from src.database import Base

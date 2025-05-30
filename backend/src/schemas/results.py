@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional
 import datetime
-from src.schemas.base import SportsmanSimpleModel
 from src.schemas.tournaments import TournamentModel
+from src.schemas.base import StudentModel
+from src.schemas.students import StudentProfileModel
 
 
 class PlaceModel(BaseModel):
@@ -13,23 +14,9 @@ class PlaceModel(BaseModel):
         from_attributes = True
 
 
-class SportsmanResultModel(BaseModel):
-    tournament: Optional[TournamentModel]
-    sportsman_id: int
-    place: Optional[PlaceModel]
-    points_scored: int
-    points_missed: int
-    number_of_fights: int
-    average_score: float
-    efficiency: float
-
-    class Config:
-        from_attributes = True
-
-
 class AddEditResultModel(BaseModel):
     tournament_id: int
-    sportsman_id: int
+    student_id: int
     place_id: int
     points_scored: int
     points_missed: int
@@ -42,7 +29,7 @@ class AddEditResultModel(BaseModel):
 class ResultModel(BaseModel):
     id: int
     tournament_id: int
-    sportsman: Optional[SportsmanSimpleModel]
+    student: Optional[StudentProfileModel]
     place: Optional[PlaceModel]
     points_scored: int
     points_missed: int

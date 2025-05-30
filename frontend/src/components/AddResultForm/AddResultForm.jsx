@@ -5,12 +5,12 @@ import api from "../../api/axios.js";
 export default function AddResultForm() {
     const [tournaments, setTournaments] = useState([]);
     const [places, setPlaces] = useState([]);
-    const [sportsmen, setSportsmen] = useState([]);
+    const [students, setStudents] = useState([]);
     const [message, setMessage] = useState({ text: '', type: '' });
 
     const [formData, setFormData] = useState({
         tournament_id: '',
-        sportsman_id: '',
+        student_id: '',
         place_id: '',
         points_scored: '',
         points_missed: '',
@@ -26,9 +26,9 @@ export default function AddResultForm() {
             .then(response  => {
                 setPlaces(response.data);
             });
-        api.get("sportsmen/")
+        api.get("students/")
             .then(response  => {
-                setSportsmen(response.data);
+                setStudents(response.data);
             });
     }, []);
 
@@ -46,7 +46,7 @@ export default function AddResultForm() {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Результат успешно добавлен!', type: 'success' });
                 setFormData({tournament_id: '',
-                    sportsman_id: '',
+                    student_id: '',
                     place_id: '',
                     points_scored: '',
                     points_missed: '',
@@ -87,14 +87,16 @@ export default function AddResultForm() {
                     <label>
                         Спортсмен:
                         <select
-                            name="sportsman_id"
-                            value={formData.sportsman_id}
+                            name="student_id"
+                            value={formData.student_id}
                             onChange={handleChange}
                             required
                         >
                             <option value="">Выберите...</option>
-                            {sportsmen.map(s => (
-                                <option key={s.id} value={s.id}>{s.last_name} {s.first_name}</option>
+                            {students.map(student => (
+                                <option
+                                    key={student.id}
+                                    value={student.id}>{student.last_name} {student.first_name}</option>
                             ))}
                         </select>
                     </label>

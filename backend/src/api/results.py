@@ -59,7 +59,7 @@ async def add_result(session: SessionDep,
     return {"status": "ok"}
 
 
-@router.put("/{result_id}/update",
+@router.put("/{result_id}/",
             tags=["Результаты"],
             summary="Изменение результата",
          )

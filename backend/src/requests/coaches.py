@@ -4,11 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, desc, func, delete
 from sqlalchemy.orm import selectinload, joinedload, contains_eager
 from src.models.groups import GroupORM
-from src.models.sportsmen import StudentProfileORM
-# import src.schemas.sportsmen as sportsmen_schemas
+from src.models.students import StudentProfileORM
 from fastapi import HTTPException
 from starlette import status
-import src.schemas.sportsmen as sportsmen_schemas
+import src.schemas.base as base_schemas
 
 
 class CoachRequest:
@@ -20,7 +19,7 @@ class CoachRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        # sportsmen = [sportsmen_schemas.SportsmanSimpleModel.model_validate(r) for r in results]
+        # students = [base_schemas.StudentModel.model_validate(r.student_data) for r in results]
         return results
 
     @classmethod
@@ -34,5 +33,5 @@ class CoachRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        # sportsmen = [sportsmen_schemas.SportsmanSimpleModel.model_validate(r) for r in results]
-        return results
+        students = [base_schemas.StudentModel.model_validate(r.student_data) for r in results]
+        return students

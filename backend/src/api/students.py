@@ -15,7 +15,7 @@ router = APIRouter(
     prefix="/students",
 )
 
-async def get_current_user_sportsman(
+async def get_current_coach_student(
     student_id: int,
     session: SessionDep,
     user_id: AuthUserDep,
@@ -73,7 +73,6 @@ async def get_student_results(
             summary="Добавление ученика",
          )
 async def add_student(session: SessionDep,
-                         # data: sportsmen_schemas.AddUpdateSportsmanModel,
                          user_id: AuthUserDep,
                         first_name: str = Form(...),
                         patronymic: str = Form(""),
@@ -112,7 +111,7 @@ async def update_student(session: SessionDep,
                            last_name: str = Form(...),
                            date_of_birth: datetime.date = Form(...),
                            avatar: UploadFile = File(None),
-                           user_sportsman: bool = Depends(get_current_user_sportsman)):
+                           coach_student: bool = Depends(get_current_coach_student)):
     s3_client = S3Client(
         access_key=AWS_ACCESS_KEY_ID,
         secret_key=AWS_SECRET_ACCESS_KEY,
@@ -139,7 +138,7 @@ async def update_student(session: SessionDep,
 async def delete_student(session: SessionDep,
                         student_id: int,
                         user_id: AuthUserDep,
-                        user_sportsman: bool = Depends(get_current_user_sportsman)):
+                        coach_student: bool = Depends(get_current_coach_student)):
     await StudentRequest.delete_student(session, student_id)
     return {"status": "ok"}
 

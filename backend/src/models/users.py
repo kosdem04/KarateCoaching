@@ -22,12 +22,17 @@ class UserORM(Base):
     tournaments: Mapped[List["TournamentORM"]] = relationship(
         "TournamentORM",
         back_populates="user",
-        cascade='all, delete'
+        passive_deletes=True
+    )
+    events: Mapped[List["EventORM"]] = relationship(
+        "EventORM",
+        back_populates="coach",
+        passive_deletes=True
     )
     groups: Mapped[List["GroupORM"]] = relationship(
         "GroupORM",
         back_populates="coach",
-        cascade='all, delete'
+        passive_deletes=True
     )
     roles: Mapped[List["RoleORM"]] = relationship(
         "RoleORM",

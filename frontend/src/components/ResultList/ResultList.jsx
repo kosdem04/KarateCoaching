@@ -87,9 +87,9 @@ export default function ResultList() {
                                                 {tournament.results.map((res, idx) => (
                                                     <tr key={idx}
                                                         onClick={() => navigate(`/my_results/${res.id}/edit`)}>
-                                                        <td>{res.sportsman.last_name}{' '}
-                                                            {res.sportsman.first_name.charAt(0)}.
-                                                            {res.sportsman.patronymic ? res.sportsman.patronymic.charAt(0) + '.' : ''}</td>
+                                                        <td>{res.student.student_data.last_name}{' '}
+                                                            {res.student.student_data.first_name.charAt(0)}.
+                                                            {res.student.student_data.patronymic ? res.student.student_data.patronymic.charAt(0) + '.' : ''}</td>
                                                         <td>{res.place.name}</td>
                                                         <td>{res.points_scored}</td>
                                                         <td>{res.points_missed}</td>
@@ -129,7 +129,7 @@ export default function ResultList() {
                                     {tournament.results?.length > 0 ? (
                                         tournament.results.map((res, idx) => (
                                             <div key={idx} onClick={() => navigate(`/my_results/${res.id}/edit`)}>
-                                                <div><strong>Спортсмен:</strong> {res.sportsman.last_name}</div>
+                                                <div><strong>Спортсмен:</strong> {res.student.student_data.last_name}</div>
                                                 <div><strong>Место:</strong> {res.place.name}</div>
                                                 <div><strong>Заработано:</strong> {res.points_scored}</div>
                                                 <div><strong>Пропущено:</strong> {res.points_missed}</div>

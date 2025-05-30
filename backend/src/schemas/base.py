@@ -21,22 +21,9 @@ class Token(BaseModel):
     token_type: str
 
 
-class SportsmanSimpleModel(BaseModel):
-    id: int
-    first_name: str
-    patronymic: Optional[str]
-    last_name: str
-    date_of_birth: datetime.datetime
-    img_url: str
-    coach_id: int
-
-    class Config:
-        from_attributes = True
-
-
 class ResulSimpleModel(BaseModel):
     tournament_id: int
-    sportsman_id: int
+    student_id: int
     place_id: int
     points_scored: int
     points_missed: int

@@ -9,13 +9,13 @@ export default function EditResultForm() {
     const { id } = useParams(); // id результата
     const [tournaments, setTournaments] = useState([]);
     const [places, setPlaces] = useState([]);
-    const [sportsmen, setSportsmen] = useState([]);
+    const [students, setStudents] = useState([]);
     const [message, setMessage] = useState({ text: '', type: '' });
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         tournament_id: '',
-        sportsman_id: '',
+        student_id: '',
         place_id: '',
         points_scored: '',
         points_missed: '',
@@ -23,7 +23,7 @@ export default function EditResultForm() {
     });
     const [originalData, setOriginalData] = useState({
         tournament_id: 0,
-        sportsman_id: 0,
+        student_id: 0,
         place_id: 0,
         points_scored: 0,
         points_missed: 0,
@@ -37,8 +37,8 @@ export default function EditResultForm() {
         api.get("results/places/")
             .then(res => setPlaces(res.data));
 
-        api.get("sportsmen/")
-            .then(res => setSportsmen(res.data));
+        api.get("students/")
+            .then(res => setStudents(res.data));
 
         api.get(`results/${id}`)
             .then(res => {
@@ -74,7 +74,7 @@ export default function EditResultForm() {
         e.preventDefault();
         if (!isChanged) return;
 
-        api.put(`results/${id}/update`, formData)
+        api.put(`results/${id}/`, formData)
             .then(() => {
                 setMessage({ text: 'Изменения сохранены!', type: 'success' });
                 setOriginalData(formData);
@@ -119,14 +119,16 @@ export default function EditResultForm() {
                 <label>
                     Спортсмен:
                     <select
-                        name="sportsman_id"
-                        value={formData.sportsman_id}
+                        name="student_id"
+                        value={formData.student_id}
                         onChange={handleChange}
                         required
                     >
                         <option value="">Выберите...</option>
-                        {sportsmen.map(s => (
-                            <option key={s.id} value={s.id}>{s.last_name} {s.first_name}</option>
+                        {students.map(student => (
+                            <option key={student.id}
+                                    value={student.id}>
+                                {student.last_name} {student.first_name}</option>
                         ))}
                     </select>
                 </label>

@@ -8,33 +8,17 @@ import src.schemas.base as base_schemas
 from fastapi import HTTPException
 from starlette import status
 
+from src.models.students import StudentProfileORM
 from src.models.tournaments import TournamentORM
 
 
 class ResultRequest:
     @classmethod
-    async def  get_results_for_sportsman(cls, session:AsyncSession, sportsman_id: int):
-        query = (
-            select(ResultORM)
-            .join(ResultORM.tournament)
-            .options(
-                selectinload(ResultORM.tournament),
-                selectinload(ResultORM.place),
-            )
-            .where(ResultORM.sportsman_id == sportsman_id)
-            .order_by(asc(TournamentORM.date_start))
-        )
-        result_query = await session.execute(query)
-        results = result_query.unique().scalars().all()
-        sportsman_results = [results_schemas.SportsmanResultModel.model_validate(r) for r in results]
-        return sportsman_results
-
-    @classmethod
     async def add_result(cls, session, data: results_schemas.AddEditResultModel):
         query = (
             select(ResultORM)
             .where(ResultORM.tournament_id == data.tournament_id,
-                   ResultORM.sportsman_id == data.sportsman_id,
+                   ResultORM.student_id == data.student_id,
                    ResultORM.place_id == data.place_id,
                    ResultORM.points_scored == data.points_scored,
                    ResultORM.points_missed == data.points_missed,
@@ -45,7 +29,7 @@ class ResultRequest:
         if not result:
             session.add(ResultORM(
                 tournament_id=data.tournament_id,
-                sportsman_id=data.sportsman_id,
+                student_id=data.student_id,
                 place_id=data.place_id,
                 points_scored=data.points_scored,
                 points_missed=data.points_missed,
@@ -57,7 +41,7 @@ class ResultRequest:
         else:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Такой турнир уже есть"
+                detail="Такой результат уже есть"
             )
 
     @classmethod
@@ -78,7 +62,10 @@ class ResultRequest:
                 selectinload(TournamentORM.results)
                 .options(
                     selectinload(ResultORM.place),
-                    selectinload(ResultORM.sportsman),
+                    selectinload(ResultORM.student)
+                    .options(
+                        selectinload(StudentProfileORM.student_data),
+                    ),
                 ),
             )
             .where(TournamentORM.user_id == user_id)
@@ -105,7 +92,7 @@ class ResultRequest:
         query = (
             update(ResultORM)
             .where(ResultORM.id == result_id)
-            .values(sportsman_id=data.sportsman_id,
+            .values(student_id=data.student_id,
                     tournament_id=data.tournament_id,
                     place_id=data.place_id,
                     points_scored=data.points_scored,

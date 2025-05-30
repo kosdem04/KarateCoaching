@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, desc, func, delete, asc
 from sqlalchemy.orm import selectinload, joinedload, contains_eager
 from src.models.groups import GroupORM
-from src.models.sportsmen import StudentProfileORM
+from src.models.students import StudentProfileORM
 import src.schemas.base as base_schemas
 from fastapi import HTTPException
 from starlette import status
@@ -122,10 +122,10 @@ class StudentRequest:
         await session.commit()
 
     @classmethod
-    async def delete_student(cls, session: AsyncSession, sportsman_id: int):
+    async def delete_student(cls, session: AsyncSession, student_id: int):
         query = (
             delete(UserORM)
-            .where(UserORM.id == sportsman_id)
+            .where(UserORM.id == student_id)
         )
         await session.execute(query)
         await session.commit()
