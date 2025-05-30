@@ -1,8 +1,8 @@
-"""Edit relationship passive_deletes=True
+"""back to back 30
 
-Revision ID: 1dc218d4a9a4
-Revises: 70cab006959b
-Create Date: 2025-05-30 18:31:24.672234
+Revision ID: 0c25af111e09
+Revises: 420c11bb18aa
+Create Date: 2025-05-30 19:01:42.856977
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '1dc218d4a9a4'
-down_revision: Union[str, None] = '70cab006959b'
+revision: str = '0c25af111e09'
+down_revision: Union[str, None] = '420c11bb18aa'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
