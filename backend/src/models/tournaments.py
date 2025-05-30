@@ -12,12 +12,6 @@ class TournamentORM(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
-    user_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey('users.id', ondelete='SET NULL')
-    )
-    type_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey('event_types.id', ondelete='SET NULL')
-    )
     date_start: Mapped[datetime.datetime]
     date_end: Mapped[datetime.datetime]
 
