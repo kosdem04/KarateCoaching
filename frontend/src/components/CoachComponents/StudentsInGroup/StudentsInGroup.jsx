@@ -35,8 +35,8 @@ export default function StudentsInGroup({ groupId, onClose }) {
                     ) : students.length > 0 ? (
                         <ul className="students-list">
                             {students.map(student => (
-                                <li key={student.student_data.id} onClick={() => setSelectedStudentId(student.student_data.id)}>
-                                    {student.student_data.last_name} {student.student_data.first_name}
+                                <li key={student.id} onClick={() => setSelectedStudentId(student.id)}>
+                                    {student.last_name} {student.first_name}
                                 </li>
                             ))}
                         </ul>

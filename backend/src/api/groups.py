@@ -5,6 +5,7 @@ from src.requests.coaches import CoachRequest
 from src.security import create_access_token
 from src.models.groups import GroupORM
 import src.schemas.groups as groups_schemas
+import src.schemas.base as base_schemas
 
 router = APIRouter(
     prefix="/groups",
@@ -24,7 +25,7 @@ async def get_coach_groups(session: SessionDep, user_id: AuthUserDep):
 @router.get("/{group_id}/students/",
             tags=["Группы"],
             summary="Список учеников в группе",
-            # response_model=list[groups_schemas.GroupModel]
+            response_model=list[base_schemas.StudentModel]
          )
 async def get_students_in_group(
         session: SessionDep,
