@@ -19,11 +19,6 @@ class UserORM(Base):
     date_of_birth: Mapped[datetime.date] = mapped_column(nullable=True)
     img_url: Mapped[str] = mapped_column(String(1000))
 
-    tournaments: Mapped[List["TournamentORM"]] = relationship(
-        "TournamentORM",
-        back_populates="user",
-        passive_deletes=True
-    )
     events: Mapped[List["EventORM"]] = relationship(
         "EventORM",
         back_populates="coach",

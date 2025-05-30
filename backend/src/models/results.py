@@ -45,10 +45,6 @@ class ResultORM(Base):
     efficiency: Mapped[Decimal] = mapped_column(
         Numeric(5, 2), nullable=False,
     )
-    tournament: Mapped["TournamentORM"] = relationship(
-        "TournamentORM",
-        back_populates="results"
-    )
     event: Mapped["EventORM"] = relationship(
         "EventORM",
         back_populates="results"

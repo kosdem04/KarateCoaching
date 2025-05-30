@@ -21,16 +21,6 @@ class TournamentORM(Base):
     date_start: Mapped[datetime.datetime]
     date_end: Mapped[datetime.datetime]
 
-    results: Mapped[List["ResultORM"]] = relationship(
-        "ResultORM",
-        back_populates="tournament",
-        passive_deletes=True
-    )
-    user: Mapped["UserORM"] = relationship(
-        "UserORM",
-        back_populates="tournaments"
-    )
-
 
 class EventORM(Base):
     __tablename__ = 'events'
