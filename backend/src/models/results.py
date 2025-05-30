@@ -49,6 +49,10 @@ class ResultORM(Base):
         "TournamentORM",
         back_populates="results"
     )
+    event: Mapped["EventORM"] = relationship(
+        "EventORM",
+        back_populates="results"
+    )
     place: Mapped["PlaceORM"] = relationship(
         "PlaceORM",
         back_populates="results"

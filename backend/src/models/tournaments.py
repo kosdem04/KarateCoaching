@@ -46,11 +46,11 @@ class EventORM(Base):
     date_start: Mapped[datetime.datetime]
     date_end: Mapped[datetime.datetime]
 
-    # results: Mapped[List["ResultORM"]] = relationship(
-    #     "ResultORM",
-    #     back_populates="tournament",
-    #     passive_deletes=True
-    # )
+    results: Mapped[List["ResultORM"]] = relationship(
+        "ResultORM",
+        back_populates="events",
+        passive_deletes=True
+    )
     coach: Mapped["UserORM"] = relationship(
         "UserORM",
         back_populates="events"
