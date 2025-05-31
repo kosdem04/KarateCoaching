@@ -3,17 +3,13 @@ import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, desc, func, delete, asc
 from sqlalchemy.orm import selectinload, joinedload, contains_eager
-from src.models.groups import GroupORM
 from src.models.students import StudentProfileORM
-import src.schemas.base as base_schemas
 from fastapi import HTTPException
 from starlette import status
-import src.schemas.students as students_schemas
 from src.models.users import UserORM
 from src.config import DEFAULT_AVATAR
 from src.models.results import ResultORM, PlaceORM
 from src.models.events import EventORM
-import src.schemas.results as results_schemas
 
 
 class StudentRequest:
@@ -28,8 +24,7 @@ class StudentRequest:
         )
         result_query = await session.execute(query)
         result = result_query.scalar()
-        student = students_schemas.StudentProfileModel.model_validate(result)
-        return student
+        return result
 
     @classmethod
     async def get_students_by_coach(cls, session: AsyncSession, coach_id: int):
@@ -42,8 +37,7 @@ class StudentRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        students = [base_schemas.StudentModel.model_validate(r.student_data) for r in results]
-        return students
+        return results
 
     @classmethod
     async def add_student(cls, session, first_name: str, patronymic: str, last_name: str,
@@ -144,5 +138,4 @@ class StudentRequest:
         )
         result_query = await session.execute(query)
         results = result_query.unique().scalars().all()
-        student_results = [students_schemas.StudentResultModel.model_validate(r) for r in results]
-        return student_results
+        return results

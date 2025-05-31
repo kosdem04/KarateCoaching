@@ -7,14 +7,14 @@ import DeleteResultModal from "../DeleteResultModal/DeleteResultModal.jsx";
 
 export default function EditResultForm() {
     const { id } = useParams(); // id результата
-    const [tournaments, setTournaments] = useState([]);
+    const [events, setEvents] = useState([]);
     const [places, setPlaces] = useState([]);
     const [students, setStudents] = useState([]);
     const [message, setMessage] = useState({ text: '', type: '' });
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        tournament_id: '',
+        event_id: '',
         student_id: '',
         place_id: '',
         points_scored: '',
@@ -22,7 +22,7 @@ export default function EditResultForm() {
         number_of_fights: ''
     });
     const [originalData, setOriginalData] = useState({
-        tournament_id: 0,
+        event_id: 0,
         student_id: 0,
         place_id: 0,
         points_scored: 0,
@@ -31,8 +31,8 @@ export default function EditResultForm() {
     });
 
     useEffect(() => {
-        api.get("tournaments/")
-            .then(res => setTournaments(res.data));
+        api.get("events/")
+            .then(res => setEvents(res.data));
 
         api.get("results/places/")
             .then(res => setPlaces(res.data));
@@ -104,14 +104,14 @@ export default function EditResultForm() {
                 <label>
                     Соревнование:
                     <select
-                        name="tournament_id"
-                        value={formData.tournament_id}
+                        name="event_id"
+                        value={formData.event_id}
                         onChange={handleChange}
                         required
                     >
                         <option value="">Выберите...</option>
-                        {tournaments.map(t => (
-                            <option key={t.id} value={t.id}>{t.name}</option>
+                        {events.map(event => (
+                            <option key={event.id} value={event.id}>{event.name}</option>
                         ))}
                     </select>
                 </label>

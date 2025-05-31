@@ -1,12 +1,12 @@
+import datetime
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, desc, delete
 from sqlalchemy.orm import selectinload, joinedload
-import src.schemas.events as events_schemas
 
 from src.models.events import  EventORM, EventTypeORM
 from fastapi import HTTPException
 from starlette import status
-import src.schemas.base as base_schemas
 
 
 
@@ -23,8 +23,7 @@ class EventRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        events = [events_schemas.EventModel.model_validate(r) for r in results]
-        return events
+        return results
 
     @classmethod
     async def get_event(cls, session: AsyncSession, event_id: int):
@@ -33,8 +32,7 @@ class EventRequest:
             .where(EventORM.id == event_id)
         )
         result = await session.scalar(query)
-        event = events_schemas.EventSimpleModel.model_validate(result)
-        return event
+        return result
 
     @classmethod
     async def get_event_types(cls, session: AsyncSession):
@@ -43,28 +41,28 @@ class EventRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        types = [base_schemas.TypeEventModel.model_validate(r) for r in results]
-        return types
+        return results
 
 
     @classmethod
-    async def add_event(cls, session, data: events_schemas.AddEditEventModel, user_id):
+    async def add_event(cls, session, name: str, type_id: int,
+                        date_start: datetime.date, date_end: datetime.date, coach_id: int):
         query = (
             select(EventORM)
-            .where(EventORM.name == data.name,
-                   EventORM.type_id == data.type_id,
-                   EventORM.date_start == data.date_start,
-                   EventORM.date_end == data.date_end,
-                   EventORM.coach_id == user_id)
+            .where(EventORM.name == name,
+                   EventORM.type_id == type_id,
+                   EventORM.date_start == date_start,
+                   EventORM.date_end == date_end,
+                   EventORM.coach_id == coach_id)
         )
         event = await session.scalar(query)
         if not event:
             session.add(EventORM(
-                name=data.name,
-                type_id=data.type_id,
-                date_start=data.date_start,
-                date_end=data.date_end,
-                coach_id=user_id,
+                name=name,
+                type_id=type_id,
+                date_start=date_start,
+                date_end=date_end,
+                coach_id=coach_id,
             ))
             await session.commit()
         else:
@@ -74,16 +72,16 @@ class EventRequest:
             )
 
     @classmethod
-    async def update_event(cls, session: AsyncSession, data: events_schemas.AddEditEventModel,
-                            event_id: int):
+    async def update_event(cls, session, name: str, type_id: int,
+                        date_start: datetime.date, date_end: datetime.date, event_id: int):
         query = (
             update(EventORM)
             .where(EventORM.id == event_id)
             .values(
-                name=data.name,
-                type_id=data.type_id,
-                date_start=data.date_start,
-                date_end=data.date_end,
+                name=name,
+                type_id=type_id,
+                date_start=date_start,
+                date_end=date_end,
                     )
         )
         await session.execute(query)

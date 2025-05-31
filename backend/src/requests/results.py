@@ -3,39 +3,43 @@ from sqlalchemy import select, update, desc, delete, asc
 from sqlalchemy.orm import selectinload, joinedload
 
 from src.models.results import ResultORM, PlaceORM
-import src.schemas.results as results_schemas
-import src.schemas.base as base_schemas
 from fastapi import HTTPException
 from starlette import status
-
 from src.models.students import StudentProfileORM
 from src.models.events import EventORM
 
 
 class ResultRequest:
     @classmethod
-    async def add_result(cls, session, data: results_schemas.AddEditResultModel):
+    async def add_result(cls,
+                         session,
+                         event_id: int,
+                         student_id: int,
+                         place_id: int,
+                         points_scored: int,
+                         points_missed: int,
+                         number_of_fights: int):
         query = (
             select(ResultORM)
-            .where(ResultORM.event_id == data.event_id,
-                   ResultORM.student_id == data.student_id,
-                   ResultORM.place_id == data.place_id,
-                   ResultORM.points_scored == data.points_scored,
-                   ResultORM.points_missed == data.points_missed,
-                   ResultORM.number_of_fights == data.number_of_fights,
+            .where(ResultORM.event_id == event_id,
+                   ResultORM.student_id == student_id,
+                   ResultORM.place_id == place_id,
+                   ResultORM.points_scored == points_scored,
+                   ResultORM.points_missed == points_missed,
+                   ResultORM.number_of_fights == number_of_fights,
                    )
         )
         result = await session.scalar(query)
         if not result:
             session.add(ResultORM(
-                event_id=data.event_id,
-                student_id=data.student_id,
-                place_id=data.place_id,
-                points_scored=data.points_scored,
-                points_missed=data.points_missed,
-                number_of_fights=data.number_of_fights,
-                average_score=data.points_scored / data.number_of_fights,
-                efficiency=(data.points_scored - data.points_missed) / data.number_of_fights,
+                event_id=event_id,
+                student_id=student_id,
+                place_id=place_id,
+                points_scored=points_scored,
+                points_missed=points_missed,
+                number_of_fights=number_of_fights,
+                average_score=points_scored / number_of_fights,
+                efficiency=(points_scored - points_missed) / number_of_fights,
             ))
             await session.commit()
         else:
@@ -51,8 +55,7 @@ class ResultRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        places = [results_schemas.PlaceModel.model_validate(r) for r in results]
-        return places
+        return results
 
     @classmethod
     async def get_results(cls, session: AsyncSession, user_id: int):
@@ -73,8 +76,7 @@ class ResultRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        user_results = [results_schemas.EventWithResultModel.model_validate(r) for r in results]
-        return user_results
+        return results
 
     @classmethod
     async def get_result(cls, session: AsyncSession, result_id: int):
@@ -82,24 +84,30 @@ class ResultRequest:
             select(ResultORM)
             .where(ResultORM.id == result_id)
         )
-        result_query = await session.scalar(query)
-        result = base_schemas.ResulSimpleModel.model_validate(result_query)
+        result = await session.scalar(query)
         return result
 
     @classmethod
-    async def update_result(cls, session: AsyncSession, data: results_schemas.AddEditResultModel,
-                               result_id: int):
+    async def update_result(cls,
+                            session,
+                            event_id: int,
+                            student_id: int,
+                            place_id: int,
+                            points_scored: int,
+                            points_missed: int,
+                            number_of_fights: int,
+                            result_id: int):
         query = (
             update(ResultORM)
             .where(ResultORM.id == result_id)
-            .values(student_id=data.student_id,
-                    event_id=data.event_id,
-                    place_id=data.place_id,
-                    points_scored=data.points_scored,
-                    points_missed=data.points_missed,
-                    number_of_fights=data.number_of_fights,
-                    average_score=data.points_scored / data.number_of_fights,
-                    efficiency=(data.points_scored - data.points_missed) / data.number_of_fights,
+            .values(student_id=student_id,
+                    event_id=event_id,
+                    place_id=place_id,
+                    points_scored=points_scored,
+                    points_missed=points_missed,
+                    number_of_fights=number_of_fights,
+                    average_score=points_scored / number_of_fights,
+                    efficiency=(points_scored - points_missed) / number_of_fights,
                     )
         )
         await session.execute(query)

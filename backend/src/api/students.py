@@ -36,7 +36,8 @@ async def get_current_coach_student(
          )
 async def get_students_by_coach(session: SessionDep,
                                  user_id: AuthUserDep):
-    students = await StudentRequest.get_students_by_coach(session, user_id)
+    students_orm = await StudentRequest.get_students_by_coach(session, user_id)
+    students = [base_schemas.StudentModel.model_validate(r.student_data) for r in students_orm]
     return students
 
 

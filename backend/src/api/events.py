@@ -47,6 +47,7 @@ async def get_coach_events(session: SessionDep,
 async def get_event_types(session: SessionDep,
                                user_id: AuthUserDep):
     types = await EventRequest.get_event_types(session)
+    # types = [base_schemas.TypeEventModel.model_validate(r) for r in types_orm]
     return types
 
 
@@ -67,13 +68,20 @@ async def get_event(session: SessionDep,
 
 
 @router.post("/add",
-            tags=["Мероприятие"],
+            tags=["Мероприятия"],
             summary="Добавление мероприятия",
          )
 async def add_event(session: SessionDep,
                          data: events_schemas.AddEditEventModel,
                          user_id: AuthUserDep):
-    await EventRequest.add_event(session, data, user_id)
+    await EventRequest.add_event(
+        session=session,
+        name=data.name,
+        type_id=data.type_id,
+        date_start=data.date_start,
+        date_end=data.date_end,
+        coach_id=user_id,
+    )
     return {"status": "ok"}
 
 
@@ -86,13 +94,18 @@ async def update_event(session: SessionDep,
                            data: events_schemas.AddEditEventModel,
                            user_id: AuthUserDep,
                             coach_event: bool = Depends(get_current_coach_event)):
-    await EventRequest.update_event(session, data, event_id)
+    await EventRequest.update_event(session=session,
+        name=data.name,
+        type_id=data.type_id,
+        date_start=data.date_start,
+        date_end=data.date_end,
+        event_id=event_id,)
     return {"status": "ok"}
 
 
 
 @router.delete("/{event_id}",
-            tags=["Мероприятие"],
+            tags=["Мероприятия"],
             summary="Удаление мероприятия",
          )
 async def delete_event(session: SessionDep,

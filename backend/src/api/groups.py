@@ -2,14 +2,27 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from src.dependency.dependencies import SessionDep, AuthUserDep
 
 from src.requests.coaches import CoachRequest
+from src.requests.groups import GroupRequest
 from src.security import create_access_token
-from src.models.groups import GroupORM
 import src.schemas.groups as groups_schemas
 import src.schemas.base as base_schemas
 
 router = APIRouter(
     prefix="/groups",
 )
+
+
+async def get_current_coach_group(
+    group_id : int,
+    session: SessionDep,
+    user_id: AuthUserDep,
+):
+    group = await GroupRequest.get_group_info(session, group_id)
+    if not group:
+        raise HTTPException(status_code=404, detail="Группа не найдена")
+    if group.coach_id != user_id:
+        raise HTTPException(status_code=403, detail="Нет доступа")
+    return True
 
 
 @router.get("/",
@@ -30,6 +43,91 @@ async def get_coach_groups(session: SessionDep, user_id: AuthUserDep):
 async def get_students_in_group(
         session: SessionDep,
         group_id: int,
-        user_id: AuthUserDep):
-    students =  await CoachRequest.get_students_in_group(session, group_id)
+        coach_group: bool = Depends(get_current_coach_group)):
+    students_orm =  await CoachRequest.get_students_in_group(session, group_id)
+    students = [base_schemas.StudentModel.model_validate(r.student_data) for r in students_orm]
     return students
+
+
+
+@router.get("/{group_id}",
+            tags=["Группы"],
+            summary="Информация о группе",
+            response_model=groups_schemas.GroupModel
+         )
+async def get_group_info(
+        session: SessionDep,
+        group_id: int,
+        coach_group: bool = Depends(get_current_coach_group)):
+    group =  await GroupRequest.get_group_info(session, group_id)
+    # group = groups_schemas.GroupModel.model_validate(result)
+    return group
+
+
+
+@router.post("/add",
+            tags=["Группы"],
+            summary="Добавление группы",
+         )
+async def add_group(session: SessionDep,
+                         data: groups_schemas.AddEditGroupModel,
+                         user_id: AuthUserDep):
+    await GroupRequest.add_group(session=session,
+                                 name=data.name,
+                                 coach_id=user_id)
+    return {"status": "ok"}
+
+
+@router.put("/{group_id}",
+            tags=["Группы"],
+            summary="Изменение группы",
+         )
+async def update_event(session: SessionDep,
+                        group_id: int,
+                        data: groups_schemas.AddEditGroupModel,
+                        user_id: AuthUserDep,
+                       coach_group: bool = Depends(get_current_coach_group)):
+    await GroupRequest.update_group(session=session,
+                                 name=data.name,
+                                 group_id=group_id)
+    return {"status": "ok"}
+
+
+
+@router.delete("/{group_id}",
+            tags=["Группы"],
+            summary="Удаление группы",
+         )
+async def delete_group(session: SessionDep,
+                            group_id: int,
+                            user_id: AuthUserDep,
+                            coach_group: bool = Depends(get_current_coach_group)):
+    await GroupRequest.delete_group(session, group_id)
+    return {"status": "ok"}
+
+
+
+@router.put("/{group_id}/add_student/{student_id}",
+            tags=["Группы"],
+            summary="Изменение группы",
+         )
+async def add_student_in_group(session: SessionDep,
+                       group_id: int,
+                       student_id: int,
+                       user_id: AuthUserDep,
+                       coach_group: bool = Depends(get_current_coach_group)):
+    await GroupRequest.add_student_in_group(session, group_id, student_id)
+    return {"status": "ok"}
+
+
+
+@router.delete("/{group_id}",
+            tags=["Группы"],
+            summary="Удаление группы",
+         )
+async def delete_group(session: SessionDep,
+                            group_id: int,
+                            user_id: AuthUserDep,
+                            coach_group: bool = Depends(get_current_coach_group)):
+    await GroupRequest.delete_group(session, group_id)
+    return {"status": "ok"}

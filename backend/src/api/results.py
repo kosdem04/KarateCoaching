@@ -55,7 +55,15 @@ async def get_result(session: SessionDep,
 async def add_result(session: SessionDep,
                          data: results_schemas.AddEditResultModel,
                          user_id: AuthUserDep):
-    await ResultRequest.add_result(session, data)
+    await ResultRequest.add_result(
+        session=session,
+        event_id=data.event_id,
+        student_id=data.student_id,
+        place_id=data.place_id,
+        points_scored=data.points_scored,
+        points_missed=data.points_missed,
+        number_of_fights=data.number_of_fights,
+    )
     return {"status": "ok"}
 
 
@@ -67,7 +75,16 @@ async def update_result(session: SessionDep,
                            result_id: int,
                            data: results_schemas.AddEditResultModel,
                            user_id: AuthUserDep):
-    await ResultRequest.update_result(session, data, result_id)
+    await ResultRequest.update_result(
+        session=session,
+        event_id=data.event_id,
+        student_id=data.student_id,
+        place_id=data.place_id,
+        points_scored=data.points_scored,
+        points_missed=data.points_missed,
+        number_of_fights=data.number_of_fights,
+        result_id=result_id
+    )
     return {"status": "ok"}
 
 

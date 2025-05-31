@@ -72,11 +72,4 @@ class AuthRequest:
         roles = result_query.scalars().all()
         return roles
 
-    @classmethod
-    async def get_admin(cls, session: AsyncSession, email: str):
-        query = (
-            select(UserORM)
-            .where(UserORM.email == email, UserORM.is_admin)
-        )
-        return await session.scalar(query)
 
