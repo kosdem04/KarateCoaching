@@ -34,8 +34,8 @@ class EventORM(Base):
         "EventTypeORM",
         back_populates="events"
     )
-    students: Mapped[List["UserORM"]] = relationship(
-        "UserORM",
+    students: Mapped[List["StudentProfileORM"]] = relationship(
+        "StudentProfileORM",
         back_populates="events",
         secondary="students_events"
     )
