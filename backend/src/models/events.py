@@ -48,3 +48,16 @@ class EventTypeORM(Base):
         back_populates="type",
         passive_deletes=True
     )
+
+
+class StudentEventORM(Base):
+    __tablename__ = 'students_events'
+
+    student_id: Mapped[int] = mapped_column(
+        ForeignKey('users.id', ondelete='CASCADE'),
+        primary_key=True
+    )
+    event_id: Mapped[int] = mapped_column(
+        ForeignKey('events.id', ondelete='CASCADE'),
+        primary_key=True
+    )
