@@ -26,6 +26,7 @@ export default function SportsmanInfo() {
         api.get(`students/${id}`)
             .then(response => {
                 setStudentInfo(response.data);
+                console.log(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -91,9 +92,9 @@ export default function SportsmanInfo() {
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart
                             data={resultsInfo.map(res => ({
-                                name: res.tournament.name.length > 10
-                                    ? res.tournament.name.slice(0, 10) + '…'
-                                    : res.tournament.name,
+                                name: res.event.name.length > 10
+                                    ? res.event.name.slice(0, 10) + '…'
+                                    : res.event.name,
                                 efficiency: res.efficiency,
                                 average_score: res.average_score
                             }))}
@@ -130,7 +131,7 @@ export default function SportsmanInfo() {
                         <tbody>
                         {resultsInfo.map((result, index) => (
                             <tr>
-                                <td> {result.tournament.name}</td>
+                                <td> {result.event.name}</td>
                                 <td><span className={getRankClass(result.place.name)}>
                                         {result.place.name}</span></td>
                                 <td> {result.points_scored}</td>
@@ -139,7 +140,7 @@ export default function SportsmanInfo() {
                                 <td> {result.efficiency}</td>
                                 <td> {result.number_of_fights}</td>
                                 <td>
-                                    {new Date(result.tournament.date_start).toLocaleDateString('ru-RU')}
+                                    {new Date(result.event.date_start).toLocaleDateString('ru-RU')}
                                 </td>
                             </tr>
                         ))}

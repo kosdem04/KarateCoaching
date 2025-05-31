@@ -130,7 +130,10 @@ class StudentRequest:
             select(ResultORM)
             .join(ResultORM.event)
             .options(
-                selectinload(ResultORM.event),
+                selectinload(ResultORM.event)
+                .options(
+                    selectinload(EventORM.type),
+                ),
                 selectinload(ResultORM.place),
             )
             .where(ResultORM.student_id == student_id)

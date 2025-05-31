@@ -3,6 +3,7 @@ import datetime
 from typing import Optional
 from src.schemas.base import StudentModel
 from src.schemas.base import PlaceModel
+from src.schemas.events import EventModel
 
 
 class StudentProfileModel(BaseModel):
@@ -16,7 +17,7 @@ class StudentProfileModel(BaseModel):
 
 class StudentResultModel(BaseModel):
     # tournament: Optional[TournamentModel]
-    event_id: int
+    event: Optional[EventModel]
     student_id: int
     place: Optional[PlaceModel]
     points_scored: int
