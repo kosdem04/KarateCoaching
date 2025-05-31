@@ -16,7 +16,7 @@ class StudentProfileModel(BaseModel):
 
 class StudentResultModel(BaseModel):
     # tournament: Optional[TournamentModel]
-    tournament_id: int
+    event_id: int
     student_id: int
     place: Optional[PlaceModel]
     points_scored: int

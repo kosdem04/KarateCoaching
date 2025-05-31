@@ -23,8 +23,8 @@ class EventRequest:
         )
         result_query = await session.execute(query)
         results = result_query.scalars().all()
-        tournaments = [events_schemas.EventModel.model_validate(r) for r in results]
-        return tournaments
+        events = [events_schemas.EventModel.model_validate(r) for r in results]
+        return events
 
     @classmethod
     async def get_event(cls, session: AsyncSession, event_id: int):

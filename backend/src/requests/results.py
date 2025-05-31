@@ -93,7 +93,7 @@ class ResultRequest:
             update(ResultORM)
             .where(ResultORM.id == result_id)
             .values(student_id=data.student_id,
-                    tournament_id=data.tournament_id,
+                    event_id=data.event_id,
                     place_id=data.place_id,
                     points_scored=data.points_scored,
                     points_missed=data.points_missed,

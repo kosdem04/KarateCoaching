@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from src.dependency.dependencies import SessionDep, AuthUserDep
 
-import src.models.events as tournaments_models
 import src.schemas.events as events_schemas
 from src.requests.events import EventRequest
 import src.schemas.base as base_schemas
@@ -15,7 +14,7 @@ router = APIRouter(
 )
 
 
-async def get_current_user_tournament(
+async def get_current_coach_event(
     event_id : int,
     session: SessionDep,
     user_id: AuthUserDep,
@@ -59,7 +58,7 @@ async def get_event_types(session: SessionDep,
 async def get_event(session: SessionDep,
                          event_id: int,
                          user_id: AuthUserDep,
-                         user_tournament: bool = Depends(get_current_user_tournament)):
+                         coach_event: bool = Depends(get_current_coach_event)):
     event = await EventRequest.get_event(session, event_id)
     if not event:
         raise HTTPException(status_code=404, detail="Мероприятие не найдено")
@@ -86,7 +85,7 @@ async def update_event(session: SessionDep,
                            event_id: int,
                            data: events_schemas.AddEditEventModel,
                            user_id: AuthUserDep,
-                            user_tournament: bool = Depends(get_current_user_tournament)):
+                            coach_event: bool = Depends(get_current_coach_event)):
     await EventRequest.update_event(session, data, event_id)
     return {"status": "ok"}
 
@@ -99,7 +98,7 @@ async def update_event(session: SessionDep,
 async def delete_event(session: SessionDep,
                             event_id: int,
                             user_id: AuthUserDep,
-                            user_tournament: bool = Depends(get_current_user_tournament)):
+                            coach_event: bool = Depends(get_current_coach_event)):
     await EventRequest.delete_event(session, event_id)
     return {"status": "ok"}
 
