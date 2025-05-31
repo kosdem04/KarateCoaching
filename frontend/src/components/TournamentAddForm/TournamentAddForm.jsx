@@ -59,12 +59,12 @@ export default function TournamentAddForm() {
         <>
             <div className="add-result-page">
                 <div className="header">
-                    <h1>Добавить турнир</h1>
+                    <h1>Добавить мероприятие</h1>
                 </div>
 
                 <form className="result-form" onSubmit={handleSubmit}>
                     <label>
-                        Название турнира:
+                        Название мероприятия:
                         <input
                             type="text"
                             name="name"
@@ -90,7 +90,7 @@ export default function TournamentAddForm() {
                         </select>
                     </label>
                     <label>
-                        Дата начала соревнований:
+                        Дата начала мероприятия:
                         <input
                             type="date"
                             name="date_start"
@@ -100,7 +100,7 @@ export default function TournamentAddForm() {
                         />
                     </label>
                     <label>
-                        Дата окончания соревнований:
+                        Дата окончания мероприятия:
                         <input
                             type="date"
                             name="date_end"

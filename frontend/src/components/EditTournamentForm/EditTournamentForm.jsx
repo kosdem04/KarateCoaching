@@ -94,7 +94,7 @@ export default function EditTournamentForm() {
     return (
         <div className="add-result-page">
             <div className="header">
-                <h1>Редактировать турнир</h1>
+                <h1>Редактировать мероприятие</h1>
             </div>
             <div className="profile-header">
                 <div className="profile-actions">
