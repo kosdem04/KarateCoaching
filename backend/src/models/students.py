@@ -46,3 +46,9 @@ class StudentProfileORM(Base):
         back_populates="student",
         passive_deletes=True
     )
+
+    events: Mapped[List["EventORM"]] = relationship(
+        "EventORM",
+        back_populates="students",
+        secondary="students_events"
+    )
