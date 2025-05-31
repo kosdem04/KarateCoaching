@@ -3,6 +3,7 @@ from src.dependency.dependencies import SessionDep, AuthUserDep
 
 from src.requests.coaches import CoachRequest
 from src.requests.groups import GroupRequest
+from src.requests.students import StudentRequest
 from src.security import create_access_token
 import src.schemas.groups as groups_schemas
 import src.schemas.base as base_schemas
@@ -109,15 +110,41 @@ async def delete_group(session: SessionDep,
 
 @router.put("/{group_id}/add_student/{student_id}",
             tags=["Группы"],
-            summary="Изменение группы",
+            summary="Добавление ученика в группу",
          )
 async def add_student_in_group(session: SessionDep,
                        group_id: int,
                        student_id: int,
                        user_id: AuthUserDep,
                        coach_group: bool = Depends(get_current_coach_group)):
-    await GroupRequest.add_student_in_group(session, group_id, student_id)
-    return {"status": "ok"}
+    student = await StudentRequest.get_student_info(session, student_id)
+    if not student:
+        raise HTTPException(status_code=404, detail="Ученик не найден")
+    if student.group_id:
+        raise HTTPException(status_code=403, detail="Ученик уже состоит в группе")
+    else:
+        await GroupRequest.add_student_in_group(session, group_id, student_id)
+        return {"status": "ok"}
+
+
+
+@router.delete("/{group_id}/add_student/{student_id}",
+            tags=["Группы"],
+            summary="Удаление ученика из группы",
+         )
+async def delete_student_from_group(session: SessionDep,
+                       group_id: int,
+                       student_id: int,
+                       user_id: AuthUserDep,
+                       coach_group: bool = Depends(get_current_coach_group)):
+    student = await StudentRequest.get_student_info(session, student_id)
+    if not student:
+        raise HTTPException(status_code=404, detail="Ученик не найден")
+    if not student.group_id:
+        raise HTTPException(status_code=403, detail="Ученик не состоит в группе")
+    else:
+        await GroupRequest.delete_student_from_group(session, student_id)
+        return {"status": "ok"}
 
 
 

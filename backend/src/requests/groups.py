@@ -62,18 +62,24 @@ class GroupRequest:
     @classmethod
     async def add_student_in_group(cls, session, group_id, student_id):
         query = (
-            select(StudentProfileORM)
+            update(StudentProfileORM)
             .where(StudentProfileORM.student_id == student_id)
-        )
-        student_in_group = await session.scalar(query)
-        if not student_in_group:
-            session.add(GroupORM(
-                name=data.name,
-                coach_id=user_id,
-            ))
-            await session.commit()
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Такая группа уже есть"
+            .values(
+                group_id=group_id,
             )
+        )
+        await session.execute(query)
+        await session.commit()
+
+
+    @classmethod
+    async def delete_student_from_group(cls, session, student_id):
+        query = (
+            update(StudentProfileORM)
+            .where(StudentProfileORM.student_id == student_id)
+            .values(
+                group_id=None,
+            )
+        )
+        await session.execute(query)
+        await session.commit()
