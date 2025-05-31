@@ -34,6 +34,11 @@ class EventORM(Base):
         "EventTypeORM",
         back_populates="events"
     )
+    students: Mapped[List["UserORM"]] = relationship(
+        "UserORM",
+        back_populates="events",
+        secondary="students_events"
+    )
 
 
 
@@ -54,7 +59,7 @@ class StudentEventORM(Base):
     __tablename__ = 'students_events'
 
     student_id: Mapped[int] = mapped_column(
-        ForeignKey('users.id', ondelete='CASCADE'),
+        ForeignKey('student_profiles.student_id', ondelete='CASCADE'),
         primary_key=True
     )
     event_id: Mapped[int] = mapped_column(
