@@ -69,6 +69,20 @@ async def get_student_results(
     return results
 
 
+@router.get("/{student_id}/events",
+            tags=["Ученики"],
+            summary="Список мероприятий ученика",
+            # response_model=events_schemas.EventSimpleModel
+         )
+async def get_student_events(session: SessionDep,
+                         student_id: int,
+                         user_id: AuthUserDep,
+                         # coach_event: bool = Depends(get_current_coach_event)
+                             ):
+    events = await StudentRequest.get_student_events(session, student_id)
+    return  events
+
+
 @router.post("/add",
             tags=["Ученики"],
             summary="Добавление ученика",

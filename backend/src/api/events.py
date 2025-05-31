@@ -66,6 +66,37 @@ async def get_event(session: SessionDep,
     return  event
 
 
+@router.get("/{event_id}/students",
+            tags=["Мероприятия"],
+            summary="Список учеников на мероприятии",
+            # response_model=events_schemas.EventSimpleModel
+         )
+async def get_event_students(session: SessionDep,
+                         event_id: int,
+                         user_id: AuthUserDep,
+                         coach_event: bool = Depends(get_current_coach_event)):
+    students = await EventRequest.get_event_students(session, event_id)
+    return  students
+
+
+@router.post("/{event_id}/{student_id}",
+            tags=["Мероприятия"],
+            summary="Регистрация ученика на мероприятие",
+            # response_model=events_schemas.EventSimpleModel
+         )
+async def add_event_student(session: SessionDep,
+                             event_id: int,
+                             student_id: int,
+                             user_id: AuthUserDep,
+                             coach_event: bool = Depends(get_current_coach_event)):
+    await EventRequest.add_event_student(
+        session=session,
+        event_id=event_id,
+        student_id=student_id,
+    )
+    return {"status": "ok"}
+
+
 
 @router.post("/add",
             tags=["Мероприятия"],
@@ -114,5 +145,25 @@ async def delete_event(session: SessionDep,
                             coach_event: bool = Depends(get_current_coach_event)):
     await EventRequest.delete_event(session, event_id)
     return {"status": "ok"}
+
+
+@router.delete("/{event_id}/{student_id}",
+            tags=["Мероприятия"],
+            summary="Удаление ученика с мероприятия",
+            # response_model=events_schemas.EventSimpleModel
+         )
+async def delete_student_from_event(session: SessionDep,
+                             event_id: int,
+                             student_id: int,
+                             user_id: AuthUserDep,
+                             coach_event: bool = Depends(get_current_coach_event)):
+    await EventRequest.delete_student_from_event(
+        session=session,
+        event_id=event_id,
+        student_id=student_id,
+    )
+    return {"status": "ok"}
+
+
 
 

@@ -40,6 +40,21 @@ class StudentRequest:
         return results
 
     @classmethod
+    async def get_student_events(cls, session: AsyncSession, student_id: int):
+        query = (
+            select(StudentProfileORM)
+            .options(
+                selectinload(StudentProfileORM.events)
+                .selectinload(EventORM.type)
+            )
+            .where(StudentProfileORM.student_id == student_id)
+        )
+        student: StudentProfileORM | None = await session.scalar(query)
+        if not student:
+            return []
+        return sorted(student.events, key=lambda e: e.date_start, reverse=True)
+
+    @classmethod
     async def add_student(cls, session, first_name: str, patronymic: str, last_name: str,
                             date_of_birth: datetime.date, avatar_url: str | None, coach_id: int):
 
