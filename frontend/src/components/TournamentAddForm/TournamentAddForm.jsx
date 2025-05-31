@@ -6,12 +6,22 @@ import {useNavigate} from "react-router-dom";
 export default function TournamentAddForm() {
     const [message, setMessage] = useState({ text: '', type: '' });
     const navigate = useNavigate();
+    const [types, setTypes] = useState([]);
 
     const [formData, setFormData] = useState({
         name: '',
+        type_id: '',
         date_start: '',
         date_end: '',
     });
+
+
+    useEffect(() => {
+        api.get("events/types")
+            .then(response  => {
+                setTypes(response.data);
+            });
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +39,7 @@ export default function TournamentAddForm() {
             .then(response  => {
                 console.log("Успешно добавлено:");
                 setMessage({ text: 'Мероприятие успешно добавлено!', type: 'success' });
-                setFormData({ name: '', date_start: '', date_end: '' });
+                setFormData({ name: '', type_id: '', date_start: '', date_end: '' });
 //                 setTimeout(() => {
 //                     setMessage({ text: '', type: '' });
 //                     navigate("/my_tournaments"); // переход через 2 секунды
@@ -64,13 +74,29 @@ export default function TournamentAddForm() {
                         />
                     </label>
                     <label>
+                        Тип мероприятия:
+                        <select
+                            name="type_id"
+                            value={formData.type_id}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Выберите...</option>
+                            {types.map(type => (
+                                <option
+                                    key={type.id}
+                                    value={type.id}>{type.name}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
                         Дата начала соревнований:
                         <input
                             type="date"
                             name="date_start"
                             value={formData.date_start}
                             onChange={handleChange}
-                               required
+                            required
                         />
                     </label>
                     <label>
@@ -80,7 +106,7 @@ export default function TournamentAddForm() {
                             name="date_end"
                             value={formData.date_end}
                             onChange={handleChange}
-                               required
+                            required
                         />
                     </label>
 

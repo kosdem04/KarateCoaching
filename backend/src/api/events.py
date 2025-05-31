@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends
 from src.dependency.dependencies import SessionDep, AuthUserDep
 
-import src.models.tournaments as tournaments_models
-import src.schemas.tournaments as tournaments_schemas
-from src.requests.tournaments import EventRequest
+import src.models.events as tournaments_models
+import src.schemas.events as events_schemas
+from src.requests.events import EventRequest
+import src.schemas.base as base_schemas
 
 from src.s3_storage import S3Client
 from src.config import (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
@@ -30,7 +31,7 @@ async def get_current_user_tournament(
 @router.get("/",
             tags=["Мероприятия"],
             summary="Просмотр всех мероприятий",
-            response_model=list[tournaments_schemas.EventModel]
+            response_model=list[events_schemas.EventModel]
          )
 async def get_coach_events(session: SessionDep,
                                user_id: AuthUserDep):
@@ -38,10 +39,22 @@ async def get_coach_events(session: SessionDep,
     return events
 
 
+
+@router.get("/types",
+            tags=["Мероприятия"],
+            summary="Просмотр всех типов мероприятий",
+            response_model=list[base_schemas.TypeEventModel]
+         )
+async def get_event_types(session: SessionDep,
+                               user_id: AuthUserDep):
+    types = await EventRequest.get_event_types(session)
+    return types
+
+
 @router.get("/{event_id}",
             tags=["Мероприятия"],
             summary="Информация о конкретном мероприятии",
-            response_model=tournaments_schemas.EventModel
+            response_model=events_schemas.EventSimpleModel
          )
 async def get_event(session: SessionDep,
                          event_id: int,
@@ -59,7 +72,7 @@ async def get_event(session: SessionDep,
             summary="Добавление мероприятия",
          )
 async def add_event(session: SessionDep,
-                         data: tournaments_schemas.AddEditEventModel,
+                         data: events_schemas.AddEditEventModel,
                          user_id: AuthUserDep):
     await EventRequest.add_event(session, data, user_id)
     return {"status": "ok"}
@@ -71,7 +84,7 @@ async def add_event(session: SessionDep,
          )
 async def update_event(session: SessionDep,
                            event_id: int,
-                           data: tournaments_schemas.AddEditEventModel,
+                           data: events_schemas.AddEditEventModel,
                            user_id: AuthUserDep,
                             user_tournament: bool = Depends(get_current_user_tournament)):
     await EventRequest.update_event(session, data, event_id)

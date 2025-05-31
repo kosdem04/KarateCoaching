@@ -74,7 +74,7 @@ export default function EditResultForm() {
         e.preventDefault();
         if (!isChanged) return;
 
-        api.put(`results/${id}/`, formData)
+        api.put(`results/${id}`, formData)
             .then(() => {
                 setMessage({ text: 'Изменения сохранены!', type: 'success' });
                 setOriginalData(formData);

@@ -11,7 +11,7 @@ export default function StudentsInGroup({ groupId, onClose }) {
     useEffect(() => {
         if (!groupId) return;
         setLoading(true);
-        api.get(`groups/${groupId}/students/`)
+        api.get(`groups/${groupId}/students`)
             .then(response => {
                 setStudents(response.data);
                 setLoading(false);

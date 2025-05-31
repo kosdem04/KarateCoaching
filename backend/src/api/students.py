@@ -41,7 +41,7 @@ async def get_students_by_coach(session: SessionDep,
 
 
 
-@router.get("/{student_id}/",
+@router.get("/{student_id}",
             tags=["Ученики"],
             summary="Информация об ученике",
             response_model=students_schemas.StudentProfileModel
@@ -55,7 +55,7 @@ async def get_student_info(
 
 
 
-@router.get("/{student_id}/results/",
+@router.get("/{student_id}/results",
             tags=["Ученики"],
             summary="Получение результатов ученика",
             response_model=list[students_schemas.StudentResultModel]
@@ -99,7 +99,7 @@ async def add_student(session: SessionDep,
 
 
 
-@router.put("/{student_id}/",
+@router.put("/{student_id}",
             tags=["Ученики"],
             summary="Изменение ученика",
          )
@@ -131,7 +131,7 @@ async def update_student(session: SessionDep,
     return {"status": "ok"}
 
 
-@router.delete("/{student_id}/",
+@router.delete("/{student_id}",
             tags=["Ученики"],
             summary="Удаление ученика",
          )

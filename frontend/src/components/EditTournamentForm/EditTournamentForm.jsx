@@ -9,17 +9,29 @@ export default function EditTournamentForm() {
     const [message, setMessage] = useState({ text: '', type: '' });
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
+    const [types, setTypes] = useState([]);
 
     const [formData, setFormData] = useState({
         name: '',
+        type_id: '',
         date_start: '',
         date_end: '',
     });
 
-    const [originalData, setOriginalData] = useState(null);
+    const [originalData, setOriginalData] = useState({
+        name: '',
+        type_id: 0,
+        date_start: '',
+        date_end: '',
+    });
 
-    // Загрузка данных спортсмена
+
+    // Загрузка данных мероприятия
     useEffect(() => {
+        api.get("events/types")
+            .then(response  => {
+                setTypes(response.data);
+            });
         api.get(`events/${id}`)
             .then(response => {
                 const data = response.data;
@@ -103,6 +115,22 @@ export default function EditTournamentForm() {
                         onChange={handleChange}
                         required
                     />
+                </label>
+                <label>
+                    Тип мероприятия:
+                    <select
+                        name="type_id"
+                        value={formData.type_id}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Выберите...</option>
+                        {types.map(type => (
+                            <option
+                                key={type.id}
+                                value={type.id}>{type.name}</option>
+                        ))}
+                    </select>
                 </label>
                 <label>
                     Дата начала:

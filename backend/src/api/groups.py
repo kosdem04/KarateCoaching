@@ -22,7 +22,7 @@ async def get_coach_groups(session: SessionDep, user_id: AuthUserDep):
     return groups
 
 
-@router.get("/{group_id}/students/",
+@router.get("/{group_id}/students",
             tags=["Группы"],
             summary="Список учеников в группе",
             response_model=list[base_schemas.StudentModel]

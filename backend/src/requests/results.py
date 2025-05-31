@@ -9,7 +9,7 @@ from fastapi import HTTPException
 from starlette import status
 
 from src.models.students import StudentProfileORM
-from src.models.tournaments import EventORM
+from src.models.events import EventORM
 
 
 class ResultRequest:

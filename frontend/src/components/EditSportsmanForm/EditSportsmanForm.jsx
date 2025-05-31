@@ -55,7 +55,7 @@ export default function EditSportsmanForm() {
             data.append('avatar', newAvatarFile);
         }
 
-        api.put(`students/${id}/`, data, {
+        api.put(`students/${id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

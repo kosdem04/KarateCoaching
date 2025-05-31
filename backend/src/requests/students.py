@@ -12,7 +12,7 @@ import src.schemas.students as students_schemas
 from src.models.users import UserORM
 from src.config import DEFAULT_AVATAR
 from src.models.results import ResultORM, PlaceORM
-from src.models.tournaments import EventORM
+from src.models.events import EventORM
 import src.schemas.results as results_schemas
 
 

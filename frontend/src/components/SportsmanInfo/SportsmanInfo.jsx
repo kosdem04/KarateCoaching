@@ -23,7 +23,7 @@ export default function SportsmanInfo() {
     };
 
     useEffect(() => {
-        api.get(`students/${id}/`)
+        api.get(`students/${id}`)
             .then(response => {
                 setStudentInfo(response.data);
                 setLoading(false);
@@ -35,7 +35,7 @@ export default function SportsmanInfo() {
                     navigate("/"); // редирект на главную
                 }
             });
-        api.get(`students/${id}/results/`)
+        api.get(`students/${id}/results`)
             .then(response => {
                 setResultsInfo(response.data);
                 setLoading(false);
@@ -50,7 +50,7 @@ export default function SportsmanInfo() {
     }, [id]);
 
     const handleDelete = () => {
-        api.delete(`students/${id}/`)
+        api.delete(`students/${id}`)
             .then(response => {
                 navigate("/my_sportsmen");
                 // Можно перенаправить пользователя или обновить состояние

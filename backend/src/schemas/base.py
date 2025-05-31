@@ -55,3 +55,11 @@ class PlaceModel(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class TypeEventModel(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True

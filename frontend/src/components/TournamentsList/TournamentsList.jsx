@@ -49,15 +49,18 @@ export default function TournamentsList() {
                     <table>
                         <thead>
                         <tr>
-                            <th>Название турнира</th>
+                            <th>Название мероприятия</th>
+                            <th>Тип мероприятия</th>
                             <th>Дата начала</th>
                             <th>Дата окончания</th>
                         </tr>
                         </thead>
                         <tbody>
                         {events.map((event) => (
-                            <tr key={event.id} onClick={() => navigate(`/my_tournaments/${event.id}/edit`)} style={{ cursor: 'pointer' }}>
+                            <tr key={event.id} onClick={() => navigate(`/my_tournaments/${event.id}/edit`)}
+                                style={{cursor: 'pointer'}}>
                                 <td>{event.name}</td>
+                                <td>{event.type.name}</td>
                                 <td>{new Date(event.date_start).toLocaleDateString('ru-RU')}</td>
                                 <td>{new Date(event.date_end).toLocaleDateString('ru-RU')}</td>
                             </tr>
